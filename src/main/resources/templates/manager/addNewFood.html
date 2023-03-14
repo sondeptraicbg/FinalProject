@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add New Food</title>
+</head>
+<body>
+<form id="formBook" th:action="@{/home/new/{id}(id=${detail.getResID()})}"  method="post" th:object="${menu}">
+
+  <label for="foodName">Food Name: </label>
+  <input type="text" id="foodName" name="foodName" th:field="*{foodName}">
+
+  <label for="des">Description: </label>
+  <input type="text" id="des" name="descriptionFood" th:field="*{descriptionFood}">s
+
+  <label for="picture">picture: </label>
+  <input type="text" id="picture" name="picture" th:field="*{picture}">
+
+  <label for="price">Price: </label>
+  <input type="text" id="price" name="descriptionFood" th:field="*{price}">
+
+  <span>Category Menu </span>
+  <select name="cateID" id="cateID">
+    <option selected value="1">Appetizers</option>
+    <option value="2">Entrees</option>
+    <option value="3" >Desserts</option>
+    <option value="4">Beverages</option>
+    <option value="5">Wines</option>
+  </select>
+  <button type="submit" id="submit-btn">Submit</button>
+</form>
+
+
+</body>
+</html>

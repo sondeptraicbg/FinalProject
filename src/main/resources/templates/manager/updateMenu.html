@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Menu</title>
+</head>
+<body>
+
+<form id="formBook" th:action="@{/home/menu/edit}" method="post" th:object="${menu}">
+  <input type="hidden" id="foodID"  name="foodID" th:value="${menu.foodId}" >
+  <input type="hidden" id="resID" name="resID" th:value="${menu.restaurant.resID}">
+
+  <label for="foodName">Food Name: </label>
+  <input type="text" id="foodName" name="foodName"  th:value="${menu.foodName}" th:field="*{foodName}">
+
+  <label for="description">Description: </label>
+  <input type="text" id="description" name="descriptionFood" th:value="${menu.descriptionFood}" th:field="*{descriptionFood}">s
+
+  <label for="picture">picture: </label>
+  <input type="text" id="picture" name="picture" th:value="${menu.picture}" th:field="*{picture}">
+
+  <label for="price">Price: </label>
+  <input type="text" id="price" name="price" th:value="${menu.price}" th:field="*{price}">
+
+  <span>Category Menu </span>
+  <select name="cateID" id="cateID">
+    <option th:value="1" th:selected="${menu.categoryMenu.getCateID() == 1}">Appetizers</option>
+    <option th:value="2" th:selected="${menu.categoryMenu.getCateID() == 2}">Entrees</option>
+    <option th:value="3" th:selected="${menu.categoryMenu.getCateID() == 3}">Desserts</option>
+    <option th:value="4" th:selected="${menu.categoryMenu.getCateID() == 4}">Beverages</option>
+    <option th:value="5" th:selected="${menu.categoryMenu.getCateID() == 5}">Wines</option>
+  </select>
+  <button type="submit" id="submit-btn">Submit</button>
+</form>
+</body>
+</html>

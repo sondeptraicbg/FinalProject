@@ -33,22 +33,25 @@
         </a>
     </div>
 
+
     <!-- LIST ORDER -->
     <div>
         <a th:href="@{/order/new/{id}(id=${restaurant.getResID()})}">Add order</a>
     </div>
     <div style="border: 2px solid; margin-bottom: 20px" th:each="order : ${listOrder}">
         <h1>List order</h1>
-        <a th:href="@{/order/{id}(id=${order.getOrderId()})}">
-            <div>
-                <h3 th:text="${order.getCustomer().getCusName()}"></h3>
-                <h3 th:text="${order.getOrderId()}"></h3>
-                <h3 th:text="${order.getOrderStatus()}"></h3>
-                <h3 th:text="${order.getTimeOrder()}"></h3>
-            </div>
-        </a>
+        <div th:if="${order.customer != null}">
+            <a th:href="@{/order/{id}(id=${order.getOrderId()})}">View Detail</a>
+            <h3 th:text="${order.getOrderId()}"></h3>
+            <h3 th:text="${order.getOrderStatus()}"></h3>
+            <h3 th:text="${order.getTimeOrder()}"></h3>
+        </div>
+        <div th:if="${order.customer == null}">
+            <h3 th:text="${order.getOrderId()}"></h3>
+            <h3 th:text="${order.getOrderStatus()}"></h3>
+            <h3 th:text="${order.getTimeOrder()}"></h3>
+        </div>
         <a th:method="GET" th:href="@{/order/update/{id}(id = ${order.orderId})}">Edit</a>
-        <a th:method="POST" th:href="@{/order/delete/{id}(id = ${order.orderId})}">Delete</a>
     </div>
 
     <!-- LIST RATE -->
@@ -62,12 +65,15 @@
     </div>
 
     <!-- LIST MENU -->
+    <a th:href="@{/home/new/{id}(id=${restaurant.getResID()})}">Add New Food</a>
     <div style="border: 2px solid; margin-bottom: 20px" th:each="menu : ${listMenu}">
         <h1>List food(menu)</h1>
         <div>
             <h3 th:text="${menu.getCategoryMenu().getCateName()}"></h3>
             <h3 th:text="${menu.getDescriptionFood()}"></h3>
             <h3 th:text="${menu.getPrice()}"></h3>
+            <a th:href="@{/home/menu/edit/{id}(id = ${menu.foodId})}">Edit</a>
+            <a th:href="@{/home/menu/delete/{id}(id = ${menu.foodId})}">Delete</a>
         </div>
     </div>
 

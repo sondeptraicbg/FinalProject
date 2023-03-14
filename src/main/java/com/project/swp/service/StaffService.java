@@ -40,9 +40,13 @@ public class StaffService {
         staffRepo.save(staff);
     }
 
+    public Staff getDetailStaff(Integer id){ return staffRepo.findById(id).orElse(null);}
+
     public Staff getStaffById(int id) {
         return staffRepo.findOneByEmpId(id);
     }
+
+    public Staff getById(int id){return staffRepo.findStaffByEmpId(id);}
 
     public Staff deleteStaffById(int id)  {
         return staffRepo.deleteByEmpId(id);
