@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Company List</title>
+</head>
+<body>
+<h1>Company List</h1>
+<div th:each="company : ${listCompany}">
+  <a style="border: aqua 2px" th:href="@{/boss/company/{id}(id=${company.getCompanyID()})}">
+    <div>
+      <h3 th:text="${company.getCompanyName()}"></h3>
+      <h3 th:text="${company.getPassword()}"></h3>
+      <h3 th:text="${company.getHotline()}"></h3>
+      <h3 th:text="${company.getEmail()}"></h3>
+      <h3 th:text="${company.getStatus()}"></h3>
+    </div>
+  </a>
+  <br>
+  <br>
+  <br>
+</div>
+</body>
+</html>

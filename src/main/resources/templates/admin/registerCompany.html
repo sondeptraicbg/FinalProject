@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Company List</title>
+</head>
+<body>
+<form th:action="@{/register/company}" method="post" th:object="${company}">
+  <label for="companyName">Company Name:</label>
+  <input type="text" id="companyName" name="companyName" required th:field="*{companyName}" />
+  <br/>
+  <label for="hotline">Hotline:</label>
+  <input type="text" id="hotline" name="hotline" required th:field="*{hotline}" />
+  <br/>
+  <label for="email">Email:</label>
+  <input type="text" id="email" name="email" required th:field="*{email}" />
+  <br/>
+  <label for="businessLicense">Business License:</label>
+  <input type="text" id="businessLicense" name="businessLicense" th:field="*{bussinessLicense}" required />
+  <br/>
+  <button type="submit">Register</button>
+</form>
+</body>
+</html>

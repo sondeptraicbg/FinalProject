@@ -1,6 +1,8 @@
 package com.project.swp.controller;
 
+import com.project.swp.entity.Company;
 import com.project.swp.entity.Customer;
+import com.project.swp.service.CompanyService;
 import com.project.swp.service.CustomerService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class RegisterController {
     private CustomerService customerService;
     @Autowired
     private HomeController homeController;
+    @Autowired
+    private CompanyService companyService;
 
     // Register for customer //
 
@@ -42,5 +46,18 @@ public class RegisterController {
     }
 
     // Register for company //
+    @GetMapping("/company")
+    public String RegisterCompany(Model model, HttpSession session) {
+        Company company = new Company();
+        model.addAttribute("company", company);
+        return "admin/registerCompany";
+    }
 
+    @PostMapping("/company")
+    public String RegisterCompany(@ModelAttribute("company")Company company, Model model) {
+        company.setStatus("WaitResponse");
+
+        companyService.SaveCompany(company);
+        return ("redirect:/home/default");
+    }
 }
