@@ -58,7 +58,7 @@ public class HomeController {
                                     @RequestParam(name = "restaurantName", required = false, defaultValue = "") String restaurantName,
                                     @RequestParam(name = "category", required = false, defaultValue = "") String category,
                                     Model model){
-        Company company = companyService.findCompanyByName(companyId);
+        Company company = companyService.findCompanyById(companyId);
 
         List<Restaurant> listRestaurant = restaurantService.searchRestaurant(company, city, restaurantName, category);
         model.addAttribute("listRestaurant", listRestaurant);
@@ -233,6 +233,14 @@ public class HomeController {
         model.addAttribute("listRate", rateList);
         List<Menu> menuList = managerHomeService.getMenuByRestaurant(restaurant.getResID());
         model.addAttribute("listMenu", menuList);
+    }
+
+    // Boss //=======================================================================================
+    @GetMapping("/boss")
+    public String BossHome(Model model, HttpSession session) {
+        List<Company> listCompany = companyService.getListCompany();
+        model.addAttribute("listCompany", listCompany);
+        return "boss/home";
     }
 
     // Default home // ==========================================================================================

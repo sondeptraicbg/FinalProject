@@ -1,13 +1,7 @@
 package com.project.swp.controller;
 
-import com.project.swp.entity.Company;
-import com.project.swp.entity.Customer;
-import com.project.swp.entity.Restaurant;
-import com.project.swp.entity.Staff;
-import com.project.swp.service.CompanyService;
-import com.project.swp.service.CustomerService;
-import com.project.swp.service.RestaurantService;
-import com.project.swp.service.StaffService;
+import com.project.swp.entity.*;
+import com.project.swp.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +25,9 @@ public class LoginController {
     private CompanyService companyService;
     @Autowired
     private RestaurantService restaurantService;
+
+    @Autowired
+    private BossService bossService;
 
     // Customer // ==============================================================================================
     @GetMapping("/customer")
@@ -96,6 +93,23 @@ public class LoginController {
 
         model.addAttribute("errorNotice", "Wrong username or password");
         return "admin/login";
+    }
+
+    // Boss // ==============================================================================================
+    @GetMapping("/boss")
+    public String FormLoginBoss(Model model) {
+        return "boss/login";
+    }
+    @PostMapping("/boss")
+    public String BossLogin(@RequestParam String username, @RequestParam String password, Model model, HttpSession session){
+        Boss boss = bossService.Authentication(username, password);
+        if(boss!=null){
+            session.setAttribute("boss", boss);
+            return ("redirect:/home/boss");
+        }
+
+        model.addAttribute("errorNotice", "Wrong username or password");
+        return "boss/login";
     }
 
     // Logout // ======================================================================================================
