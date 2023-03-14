@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add New Staff</title>
+</head>
+
+<body>
+<h1>Update Staff</h1>
+
+<form method="post" th:action="@{/home/staff/edit}">
+
+  <input type="hidden" th:name="resID" th:value="${staff.role.roleId.restaurant.resID}" />
+
+  <input type="hidden" th:name="empID" th:value="${staff.empId}" />
+  <label>Employee Name:</label>
+
+  <input type="text" th:name="empName" th:value="${staff.empName}" />
+  <br/>
+  <label>Email:</label>
+  <input type="text" th:name="email" th:value="${staff.email}" />
+  <br/>
+  <label>Password:</label>
+  <input type="password" th:name="password" th:value="${staff.password}" />
+  <br/>
+  <label>Phone Number:</label>
+  <input type="text" th:name="phoneNumber" th:value="${staff.phoneNumber}" />
+  <br/>
+  <label>Picture:</label>
+  <input type="text" th:name="picture" th:value="${staff.picture}" />
+  <br/>
+  <label>Salary:</label>
+  <input type="text" th:name="salary" th:value="${staff.salary}" />
+  <br/>
+  <label>Status:</label>
+  <input type="text" th:name="status" th:value="${staff.status}" />
+  <br/>
+  <label>Username:</label>
+  <input type="text" th:name="userName" th:value="${staff.userName}" />
+  <br/>
+  <label>Role ID:</label>
+  <input type="text" th:name="roleID" th:value="${staff.getRole().getRoleId().getRoleId()}" />
+  <br/>
+  <input type="submit" value="Save"/>
+</form>
+
+</body>
+
+</html>
