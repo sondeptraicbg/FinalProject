@@ -42,6 +42,18 @@
     <div class="btn_tarbar">
         <button class="tablinks" onclick="openCity(event, 'Tokyo')">Staff</button>
     </div>
+    <h1>List order</h1>
+    <div style="border: 2px solid; margin-bottom: 20px" th:each="order : ${listOrder}">
+        <div th:if="${order.customer != null}">
+            <a th:href="@{/order/{id}(id=${order.getOrderId()})}">View Detail</a>
+            <h3 th:text="${order.getOrderId()}"></h3>
+            <h3 th:text="${order.getOrderStatus()}"></h3>
+            <h3 th:text="${order.getTimeOrder()}"></h3>
+        </div>
+        <div th:if="${order.customer == null}">
+            <h3 th:text="${order.getOrderId()}"></h3>
+            <h3 th:text="${order.getOrderStatus()}"></h3>
+            <h3 th:text="${order.getTimeOrder()}"></h3>
 
     <div th:object="${staff}">
         <span th:text="${staff.getEmpName()}"></span>

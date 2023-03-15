@@ -62,7 +62,7 @@ public class RestaurantController {
         model.addAttribute("detail", restaurant);
         List<CategoryMenu> categoryMenus = categoryMenuService.getListCategory();
         model.addAttribute("listCategoryMenu", categoryMenus);
-        List<Menu> listMenuDetailRes = menuService.getListMenusBySearch(new CategoryMenu(), foodName, priceFrom, priceTo, restaurant);
+        List<Menu> listMenuDetailRes = menuService.getListMenusBySearch(null, foodName, priceFrom, priceTo, restaurant);
         model.addAttribute("listMenuDetailRes", listMenuDetailRes);
 
         Order order = new Order();

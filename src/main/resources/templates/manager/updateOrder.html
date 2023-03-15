@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" >
 
 <head>
     <meta charset="UTF-8">
@@ -23,15 +23,15 @@
 
         <span>Method payment</span>
         <select th:field="*{methodPayment}">
-            <option selected th:text="${order.methodPayment}" value="apple"></option>
-            <option value="Momo">Momo</option>
-            <option value="Banking" >Banking</option>
-            <option value="Cash">Cash</option>
+            <option  th:checked="${order.methodPayment=='Apple'}" value="Apple">Apple</option>
+            <option th:checked="${order.getMethodPayment()=='Momo'}" value="Momo">Momo</option>
+            <option th:checked="${order.getMethodPayment()=='Banking'}" value="Banking" >Banking</option>
+            <option th:checked="${order.getMethodPayment()=='Cash'}" value="Cash">Cash</option>
         </select>
         <br>
 
         <span>Time of Order</span>
-        <input type="datetime-local" th:field="*{timeOrder}" th:value="${order.timeOrder}"/>
+        <input type="datetime-local" th:field="*{timeOrder}" th:value="${order.getTimeOrder()}"/>
         <br>
 
         <span>Total</span>
@@ -47,17 +47,62 @@
 <!--            <option th:each="tb : ${tableqs}" th:attr="data-table='${#strings.escapeJson(#json.toJson(tb))}'" th:text="${tb.getTableId().getTableId()}"></option>-->
 <!--        </select>-->
 
-        <div>
-            <input th:each="tb : ${tableqs}" type="checkbox" name="tb", th:value="${tb.getTableId().getTableId()}" th:text="${tb.getTableId().getTableId()}">
+        <div th:each="tb : ${tableqs}">
+            <input  type="checkbox" th:disabled="${order.getOrderStatus() != 'Wait Set'}" th:checked="${order.getStringTable() != null and !order.getStringTable().isEmpty() and order.getStringTable().contains(tb.getTableId().getTableId())}" name="tb" th:value="${tb.getTableId().getTableId()}" th:text="${tb.getTableId().getTableId()}">
+            <input  type="hidden" th:if="${order.getOrderStatus() != 'Wait Set' and order.getStringTable() != null and !order.getStringTable().isEmpty() and order.getStringTable().contains(tb.getTableId().getTableId())}" name="tb"  th:value="${tb.getTableId().getTableId()}">
         </div>
 
-        <span>Pay</span>
-        <input type="radio" name="pay" th:field="*{orderStatus}" value="wait pay">Wait pay
-        <input type="radio" name="pay" th:field="*{orderStatus}" value="done">Done
+        <span>Status</span>
+        <input type="radio" name="pay" th:field="*{orderStatus}" value="Wait Set">Wait Set
+        <input type="radio" name="pay" th:field="*{orderStatus}" value="Wait Pay">Wait Pay
+        <input type="radio" name="pay" th:field="*{orderStatus}" value="Done">Done
+
+        <span>Order Detail</span>
+        <table>
+            <thead>
+            <tr>
+                <th>Food Name</th>
+                <th>Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="orderDetail: ${listOrderDetail}">
+                <td th:text="${orderDetail.getOrderDetailID().getMenu().getFoodName()}"></td>
+                <td>
+                    <input type="number" name="quantity" min="0" th:value="${orderDetail.getQuantity()}"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
         <input type="submit" value="Save">
     </form>
 
+    <form th:action="@{/order/addMenu/{orderId}(orderId=${order.getOrderId()})}" th:object="${order}" method="post">
+        <table>
+            <thead>
+            <tr>
+                <th></th>
+                <th>Food Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="menu, menuIndex : ${listMenu}">
+                <td>
+                    <input type="checkbox" name="foodIds" th:value="${menu.getFoodId()}">
+                </td>
+                <td th:text="${menu.getFoodName()}"></td>
+                <td th:text="${menu.getPrice()}"></td>
+                <td>
+                    <input type="number" name="quantity" min="0" value="0"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="submit">Add</button>
+    </form>
 </body>
 
 </html>
