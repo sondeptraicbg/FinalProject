@@ -66,10 +66,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="orderDetail: ${listOrderDetail}">
-                <td th:text="${orderDetail.getOrderDetailID().getMenu().getFoodName()}"></td>
+            <tr th:each="invoice: ${listInvoice}">
+                <td th:text="${invoice.getInvoiceID().getMenu().getFoodName()}"></td>
                 <td>
-                    <input type="number" name="quantity" min="0" th:value="${orderDetail.getQuantity()}"/>
+                    <input type="number" name="quantity" min="0" th:value="${invoice.getActualQuantity()}"/>
                 </td>
             </tr>
             </tbody>
@@ -82,17 +82,13 @@
         <table>
             <thead>
             <tr>
-                <th></th>
                 <th>Food Name</th>
                 <th>Price</th>
                 <th>Quantity</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="menu, menuIndex : ${listMenu}">
-                <td>
-                    <input type="checkbox" name="foodIds" th:value="${menu.getFoodId()}">
-                </td>
+            <tr th:each="menu : ${listMenu}">
                 <td th:text="${menu.getFoodName()}"></td>
                 <td th:text="${menu.getPrice()}"></td>
                 <td>

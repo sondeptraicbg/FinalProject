@@ -129,17 +129,7 @@
                                     <td th:text="${order.getStringTable()}" />
                                     <td th:text="${order.getOrderStatus()}" />
                                     <td>
-                                        <div th:if="${order.getOrderStatus().equals('Wait Set')}">
-                                            <a th:href="@{/customer}" th:text="Delete"></a>
-                                            <a th:href="@{/customer}" th:text="Edit"></a>
-                                        </div>
-                                        <div th:if="${order.getOrderStatus().equals('Wait Pay')}">
-                                            <a th:href="@{/customer}" th:text="View"></a>
-                                            <a th:href="@{/customer}" th:text="Pay"></a>
-                                        </div>
-                                        <div th:if="${order.getOrderStatus().equals('Complete')}">
-                                            <a th:href="@{/customer}" th:text="View"></a>
-                                        </div>
+                                        <a th:href="@{/order/customer/view/{id}(id=${order.getOrderId()})}" th:text="View"></a>
                                     </td>
                                 </tr>
                                 </tbody>
