@@ -38,8 +38,8 @@
     <div>
         <a th:href="@{/order/new/{id}(id=${restaurant.getResID()})}">Add order</a>
     </div>
+    <h1>List order</h1>
     <div style="border: 2px solid; margin-bottom: 20px" th:each="order : ${listOrder}">
-        <h1>List order</h1>
         <div th:if="${order.customer != null}">
             <a th:href="@{/order/{id}(id=${order.getOrderId()})}">View Detail</a>
             <h3 th:text="${order.getOrderId()}"></h3>
