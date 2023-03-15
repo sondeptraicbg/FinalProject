@@ -67,8 +67,14 @@ public class OrderController {
         List<Tableq> tableqs = tableService.getTableByResId(restaurant.getResID());
         model.addAttribute("tableqs", tableqs);
 
+
         List<Invoice> listInvoiceByOrderID = invoiceService.getListInvoiceByOrderId(id);
         model.addAttribute("listInvoice", listInvoiceByOrderID);
+
+
+        List<OrderDetail> listOrderDetailByOrderID = orderDetailService.getListOrderDetailByOrderID(id);
+        model.addAttribute("listOrderDetail", listOrderDetailByOrderID);
+
 
         List<Menu> listMenu = menuService.getListMenuByResId(restaurant.getResID());
         model.addAttribute("listMenu", listMenu);
