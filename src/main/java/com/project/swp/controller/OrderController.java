@@ -37,6 +37,24 @@ public class OrderController {
         return "collection/detailOrder";
     }
 
+    @GetMapping("/new/{id}")
+    public String newOrder(@PathVariable("id") int id, Model model, HttpSession session){
+        Order order = orderService.getById(id);
+        model.addAttribute("order", order);
+        Restaurant restaurant = restaurantService.getDetailRes(id);
+        model.addAttribute("detail", restaurant);
+        return "manager/addNewOrder";
+    }
+
+    @PostMapping("/new/{id}")
+    public String addNewOrder(@PathVariable("id") int id, @ModelAttribute("order") Order order, HttpSession session){
+        Restaurant restaurant = restaurantService.getDetailRes(id);
+        order.setOrderStatus("Wait pay");
+        order.setRestaurant(restaurant);
+        orderService.save(order);
+        return "redirect:/home/manager";
+    }
+
     @GetMapping("/update/{id}")
     public String updateOrder(@PathVariable("id") int id, Model model, HttpSession session){
         Order order = orderService.getById(id);
@@ -44,7 +62,6 @@ public class OrderController {
         Restaurant restaurant = (Restaurant) session.getAttribute("restaurant");
         List<Tableq> tableqs = tableService.getTableByResId(restaurant.getResID());
         model.addAttribute("tableqs", tableqs);
-
         return "manager/updateOrder";
     }
 

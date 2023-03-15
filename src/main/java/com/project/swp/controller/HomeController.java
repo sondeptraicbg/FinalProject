@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -24,7 +25,16 @@ public class HomeController {
     private CompanyService companyService;
     @Autowired
     private StaffService staffService;
+    @Autowired
+    private CategoryMenuService categoryMenuService;
+    @Autowired
+    private  MenuService menuService;
 
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private OrderService orderService;
     @Autowired
     private AdminHomeService adminHomeService;
 
@@ -51,7 +61,7 @@ public class HomeController {
                                     @RequestParam(name = "restaurantName", required = false, defaultValue = "") String restaurantName,
                                     @RequestParam(name = "category", required = false, defaultValue = "") String category,
                                     Model model){
-        Company company = companyService.findCompanyByName(companyId);
+        Company company = companyService.findCompanyById(companyId);
 
         List<Restaurant> listRestaurant = restaurantService.searchRestaurant(company, city, restaurantName, category);
         model.addAttribute("listRestaurant", listRestaurant);
@@ -68,6 +78,16 @@ public class HomeController {
     }
 
     // Manager place // =========================================================================================
+
+    @GetMapping("/search/{resID}")
+    public String getOrderByTime(@RequestParam("startTimeOrder")LocalDateTime startTimeOrder,
+                                 @RequestParam("endTimeOrder") LocalDateTime endTimeOrder,
+                                 Model model){
+        List<Order> order = orderService.getOrderByTime(startTimeOrder,endTimeOrder);
+        model.addAttribute("order", order);
+        return "redirect:/home/manager";
+    }
+
     @GetMapping("/manager")
     public String ManagerHome(Model model, HttpSession session) {
         Staff staff = (Staff) session.getAttribute("staff");
@@ -83,6 +103,113 @@ public class HomeController {
         model.addAttribute("staff", staff);
         return "manager/employeeDetail";
     }
+
+    //edit staff
+    @GetMapping("/staff/edit/{id}")
+    public String updateStaff(@PathVariable("id") Integer id, Model model){
+        try{
+            Staff staff = staffService.getById(id);
+            model.addAttribute("staff", staff);
+            Restaurant restaurant = restaurantService.getDetailRes(id);
+            model.addAttribute("resID", restaurant);
+            return "manager/updateStaff";
+        }catch (Exception ex){
+            return "redirect:/home/manager";
+        }
+    }
+    @PostMapping("staff/edit")
+    public String updateStaffs(@RequestParam(value = "resID") int resID,
+                               @RequestParam(value = "empID") int empID,
+                               @RequestParam(value = "empName") String empName,
+                               @RequestParam(value = "email") String email,
+                               @RequestParam(value = "password") String password,
+                               @RequestParam(value = "phoneNumber") String phoneNumber,
+                               @RequestParam(value = "picture") String picture,
+                               @RequestParam(value = "salary") double salary,
+                               @RequestParam(value = "status") String status,
+                               @RequestParam(value = "userName") String userName,
+                               @RequestParam(value = "roleID") int roleID){
+        Restaurant restaurant = restaurantService.getDetailRes(resID);
+        Staff staffCheck = staffService.getDetailStaff(empID);
+        Role role = roleService.getRoleByRestaurantAndRoleID(resID, roleID);
+        staffCheck.setEmpName(empName);
+        staffCheck.setUserName(userName);
+        staffCheck.setPassword(password);
+        staffCheck.setEmail(email);
+        staffCheck.setPhoneNumber(phoneNumber);
+        staffCheck.setPicture(picture);
+        staffCheck.setSalary(salary);
+        staffCheck.setStatus(status);
+        staffCheck.getRole().getRoleId().setRestaurant(restaurant);
+        staffCheck.setRole(role);
+        staffService.saveStaff(staffCheck);
+        return "redirect:/home/manager";
+    }
+    // delete staff by id
+//    @GetMapping("/menu/delete/{id}")
+//    public String deleteStaffByID(@PathVariable("id") int empID) throws Exception {
+//        staffService.deleteStaffById(empID);
+//        return "redirect:/home/manager";
+//    }
+
+    // Add new food
+    @GetMapping("/new/{id}")
+    public String newFood(@PathVariable("id") int id,@ModelAttribute("menu") Menu menu, Model model) throws Exception {
+        model.addAttribute("menu", menu);
+        Restaurant restaurant = restaurantService.getDetailRes(id);
+        model.addAttribute("detail", restaurant);
+        return "manager/addNewFood";
+    }
+    @PostMapping("/new/{id}")
+    public String addNewFood(@PathVariable("id") int id, @RequestParam(value = "cateID") int cateID, @ModelAttribute("menu") Menu menu, Model model){
+        Restaurant restaurant = restaurantService.getDetailRes(id);
+        CategoryMenu categoryMenu = categoryMenuService.getCategoryMenuByCateID(cateID);
+        menu.setStatusFood(true);
+        menu.setCategoryMenu(categoryMenu);
+        menu.setRestaurant(restaurant);
+        menuService.save(menu);
+        return "redirect:/home/manager";
+    }
+
+    // update food
+    @GetMapping("/menu/edit/{id}")
+    public String getDetailFood(@PathVariable("id") int id, Model model) throws Exception {
+        Menu menu = menuService.getById(id);
+        model.addAttribute("menu", menu);
+        return "manager/updateMenu";
+    }
+
+    @PostMapping("/menu/edit")
+    public String updateFood(@RequestParam("foodID") int foodID,
+                             @RequestParam("resID") int resID,
+                             @RequestParam("foodName") String foodName,
+                             @RequestParam("descriptionFood") String descriptionFood,
+                             @RequestParam("picture") String picture,
+                             @RequestParam("price") double price,
+                             @RequestParam("cateID") int cateID) throws Exception {
+        Menu menuCheck = menuService.getById(foodID);
+        Restaurant restaurant = restaurantService.getDetailRes(resID);
+        CategoryMenu categoryMenu = categoryMenuService.getCategoryMenuByCateID(cateID);
+        menuCheck.setFoodName(foodName);
+        menuCheck.setDescriptionFood(descriptionFood);
+        menuCheck.setPicture(picture);
+        menuCheck.setPrice(price);
+        menuCheck.setCategoryMenu(categoryMenu);
+        menuCheck.setRestaurant(restaurant);
+        menuService.save(menuCheck);
+        return "redirect:/home/manager";
+    }
+
+    // delete food by foodId
+    @GetMapping("/menu/delete/{id}")
+    public String deleteFoodById(@PathVariable("id") int foodID) throws Exception {
+
+        menuService.deleteById(foodID);
+
+        return "redirect:/home/manager";
+    }
+
+
 
     // Admin Place // ==========================================================================================
 
@@ -119,6 +246,14 @@ public class HomeController {
         model.addAttribute("listRate", rateList);
         List<Menu> menuList = managerHomeService.getMenuByRestaurant(restaurant.getResID());
         model.addAttribute("listMenu", menuList);
+    }
+
+    // Boss //=======================================================================================
+    @GetMapping("/boss")
+    public String BossHome(Model model, HttpSession session) {
+        List<Company> listCompany = companyService.getListCompany();
+        model.addAttribute("listCompany", listCompany);
+        return "boss/home";
     }
 
     // Default home // ==========================================================================================

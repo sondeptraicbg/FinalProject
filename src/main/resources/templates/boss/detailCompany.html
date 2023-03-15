@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Company List</title>
+</head>
+<body>
+<h1>Company </h1>
+<label>Company Name</label>
+<h3 th:text="${company.getCompanyName()}"></h3>
+<label>Email</label>
+<h3 th:text="${company.getEmail()}"></h3>
+<label>Hotline</label>
+<h3 th:text="${company.getHotline()}"></h3>
+<label>Bussiness License</label>
+<img th:src="'http://drive.google.com/uc?export=view&id=' + ${fileId}">
+<form th:action="@{/boss/approve}" method="post">
+  <input type="hidden" id="companyId" name="companyId" th:value="${company.getCompanyID()}" />
+  <select name="status">
+    <option th:value="WaitResponse" th:selected="${company.getStatus() == 'WaitResponse'}">Wait Response</option>
+    <option th:value="Active" th:selected="${company.getStatus() == 'Active'}">Active</option>
+    <option th:value="UnActive" th:selected="${company.getStatus() == 'UnActive'}">Un Active</option>
+  </select>
+  <button type="submit">Save</button>
+</form>
+</body>
+</html>
