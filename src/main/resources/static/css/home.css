@@ -60,7 +60,6 @@ button i{
 
 input[type=text]{
     width: 400px;
-    box-shadow: 0 0 15px 4px;
     border-radius: 5px;
 }
 
@@ -254,12 +253,11 @@ a:hover{
 }
 
 .by-cate a{
-    padding: 3px 4px;
+    padding: 1px;
     background: #f26522;
     color: #fff;
     border-radius: 4px;
-    font-size: 20px;
-    margin-right: 5px;
+    font-size: 15px;
 }
 
 .by-cate h1,.by-price h1{
@@ -345,5 +343,9 @@ footer li ::after{
     right: 0;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.button-grp{
+    margin-top: 10px;
 }
 

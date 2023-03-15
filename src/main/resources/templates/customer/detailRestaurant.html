@@ -44,7 +44,6 @@
 </header>
 
 
-
 <!-- start body -->
 <section class="detail">
     <div class="detail-container">
@@ -63,7 +62,6 @@
                 </div>
 
 
-
                 <div class="detail-left-search-item">
                     <div class="by-cate">
                         <h1 class="serparater">Category</h1>
@@ -77,11 +75,11 @@
                     <div class="by-price">
                         <h1 class="serparater">Price</h1>
                         <form th:action="@{/restaurant/customer/searchMenu}" method="post">
-                            <input type="hidden" th:name="resID" th:value="${detail.getResID()}" />
+                            <input type="hidden" th:name="resID" th:value="${detail.getResID()}"/>
 
-                            <input type="text" placeholder="From" id="priceFrom" name="priceFrom" />
+                            <input type="text" placeholder="From" id="priceFrom" name="priceFrom"/>
 
-                            <input type="text" placeholder="To" id="priceTo" name="priceTo" />
+                            <input type="text" placeholder="To" id="priceTo" name="priceTo"/>
 
                             <button type="submit">Search</button>
                         </form>
@@ -109,7 +107,6 @@
                 </div>
 
 
-
             </div>
 
             <div class="detail-right">
@@ -128,16 +125,19 @@
                         <input type="number" id="numberOfPeople" name="numberOfPeople" required
                                th:field="*{numberCustomer}" placeholder="Number of guess"><br>
 
-                        <input type="tel" id="phoneNumber" name="phoneNumber" th:field="*{phoneCustomer}" placeholder="Phone"><br>
+                        <input type="tel" id="phoneNumber" name="phoneNumber" th:field="*{phoneCustomer}"
+                               placeholder="Phone"><br>
 
-                        <select th:field="*{methodPayment}">
-                            <option selected value="Visa">Visa</option>
-                            <option value="Momo">Momo</option>
-                            <option value="Banking">Banking</option>
-                            <option value="Cash">Cash</option>
-                        </select>
+                        <div class="button-grp">
+                            <select th:field="*{methodPayment}">
+                                <option selected value="Visa">Visa</option>
+                                <option value="Momo">Momo</option>
+                                <option value="Banking">Banking</option>
+                                <option value="Cash">Cash</option>
+                            </select>
 
-                        <button type="submit" id="submit-btn">Submit</button>
+                            <button type="submit" id="submit-btn">Submit</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -148,13 +148,13 @@
 </section>
 
 <!-- footer -->
-<div class="footer">
+<footer>
     <li><a href=""><img src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E"
                         alt=""></a></li>
     <li><a href="">Contact</a></li>
     <li><a href="">We're hiring</a></li>
     <li><a href="">About us</a></li>
-</div>
+</footer>
 
 </body>
 
