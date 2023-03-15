@@ -16,12 +16,14 @@ public interface OrderRepo extends JpaRepository<Order, Integer> {
 
     Order findByOrderId(int id);
 
-    Order deleteByOrderId(int id);
+    Order deleteByOrderId(int orderId);
 
     List<Order> findByCustomer_CusIDOrderByOrderStatusDesc(int  cusID);
 
     @Query("select max (o.orderId) from Order o")
     int getOrderIdNLastest();
+
+    List<Order> findAllByCustomer_CusID(int cusId);
 
 //    @Modifying
 //    @Query("Update Order o set o.table.tableId.restaurant.resID = :resID where o.orderId = :orderID")

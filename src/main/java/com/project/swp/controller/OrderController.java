@@ -31,6 +31,9 @@ public class OrderController {
     @Autowired
     private OrderDetailService orderDetailService;
 
+    @Autowired
+    private InvoiceService invoiceService;
+
     @GetMapping("/{id}")
     public String getOrderDetail(@PathVariable int id, Model model) {
         Order order = orderService.getOrderById(id);
@@ -64,8 +67,8 @@ public class OrderController {
         List<Tableq> tableqs = tableService.getTableByResId(restaurant.getResID());
         model.addAttribute("tableqs", tableqs);
 
-        List<OrderDetail> listOrderDetailByOrderID = orderDetailService.getListOrderDetailByOrderID(id);
-        model.addAttribute("listOrderDetail", listOrderDetailByOrderID);
+        List<Invoice> listInvoiceByOrderID = invoiceService.getListInvoiceByOrderId(id);
+        model.addAttribute("listInvoice", listInvoiceByOrderID);
 
         List<Menu> listMenu = menuService.getListMenuByResId(restaurant.getResID());
         model.addAttribute("listMenu", listMenu);
@@ -82,7 +85,7 @@ public class OrderController {
         order.setStringTable(String.join(",", tableIds));
         order.setStaff(staff);
         orderService.save(order);
-        return "redirect:/home/manager";
+        return "redirect:/order/update/" + order.getOrderId();
     }
 
     @GetMapping("/delete/{id}")
@@ -98,30 +101,75 @@ public class OrderController {
 
     //    ===   Add Menu Into Order =============================================
     @PostMapping("/addMenu/{orderId}")
-    public String addMenuToOrder(@PathVariable("orderId") int orderId, @RequestParam("foodIds") List<Integer> foodIds, @RequestParam("quantity") List<Integer> quantity) throws Exception {
+    public String addMenuToOrder(@PathVariable("orderId") int orderId, @RequestParam("quantity") List<Integer> quantity, HttpSession httpSession) throws Exception {
         Order order = orderService.getOrderById(orderId);
 
-        List<OrderDetail> orderDetails = new ArrayList<>();
+        Restaurant restaurant = (Restaurant) httpSession.getAttribute("restaurant");
+        List<Menu> listMenuByRestaurent = menuService.getListMenuByResId(restaurant.getResID());
 
-        List<Integer> validQuantities = new ArrayList<>();
-        for (int item : quantity) {
-            if (item > 0) {
-                validQuantities.add(item);
+        for(int i = 0; i < listMenuByRestaurent.size(); i++) {
+            if(quantity.get(i) > 0) {
+                Menu menu = listMenuByRestaurent.get(i);
+                int quan = quantity.get(i);
+                ///////////////////////      Oder Detail       /////////////////////////////
+                OrderDetailID orderDetailID = new OrderDetailID(order, menu);
+                OrderDetail orderDetail = orderDetailService.searchOrderDetail(orderDetailID);
+                if(orderDetail == null) {
+                    orderDetail = new OrderDetail(orderDetailID, quan);
+                    orderDetailService.AddOrderDetail(orderDetail);
+                }
+                ///////////////////////      Invoice       /////////////////////////////
+                InvoiceID invoiceID = new InvoiceID(order, menu);
+                Invoice invoice = invoiceService.searchInvoice(invoiceID);
+                if(invoice == null) {
+                    invoice = new Invoice();
+                    invoice.setInvoiceID(invoiceID);
+                    invoice.setStaff((Staff) httpSession.getAttribute("staff"));
+                    invoice.setDiscount(0.15F);
+                    invoice.setActualQuantity(quan);
+                    invoice.setActualTotal((float) (quan * (1.0 - invoice.getDiscount()) * menu.getPrice()));
+                    invoiceService.saveInvoice(invoice);
+
+                }else {
+                    invoice.setActualQuantity(invoice.getActualQuantity() + quan);
+                    invoice.setActualTotal((invoice.getActualTotal()) + (float) (quan * (1.0 - invoice.getDiscount()) * menu.getPrice()));
+                }
+
+                if (order.getTotal() == null)
+                    order.setTotal(0.0);
+                order.setTotal(order.getTotal() + invoice.getActualTotal());
+                orderService.save(order);
             }
         }
-        for(int i = 0; i < foodIds.size(); i++) {
-            Menu menu = menuService.getById(foodIds.get(i));
-            if (order.getTotal() == null)
-                order.setTotal(0.0);
-            order.setTotal(order.getTotal() + validQuantities.get(i) * menu.getPrice());
-            orderService.save(order);
-            OrderDetail orderDetail = new OrderDetail();
-            OrderDetailID orderDetailID = new OrderDetailID(order, menu);
-            orderDetail.setOrderDetailID(orderDetailID);
-            orderDetail.setQuantity(validQuantities.get(i));
-            orderDetailService.AddOrderDetail(orderDetail);
-            orderDetails.add(orderDetail);
-        }
+
         return "redirect:/order/update/" + orderId;
+    }
+
+    @GetMapping("/customer/view/{id}")
+    public String CustomerViewOrder(@PathVariable("id") int id, Model model, HttpSession session) {
+        Order order = orderService.getOrderById(id);
+        model.addAttribute("order", order);
+        return "customer/detailOrder";
+    }
+
+    @PostMapping("/customer/edit")
+    public String CustomerEditOrder(@ModelAttribute("order") Order order) {
+        orderService.save(order);
+        return "redirect:/order/customer/view/" + order.getOrderId();
+    }
+
+    @GetMapping("/customer/delete/{id}")
+    public String CustomerDeleteOrder(@PathVariable("id") int id) {
+        Order order = orderService.getOrderById(id);
+        orderService.delteOrder(order);
+        return "redirect:/customer/profile";
+    }
+
+    @GetMapping("/customer/pay/{id}")
+    public String CustomerPay(@PathVariable("id") int id) {
+        Order order = orderService.getOrderById(id);
+        order.setOrderStatus("Done");
+        orderService.save(order);
+        return "redirect:/customer/profile";
     }
 }

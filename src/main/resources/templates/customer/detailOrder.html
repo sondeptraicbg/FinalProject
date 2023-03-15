@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Restaurant Detail</title>
+
+</head>
+<body>
+  <h1>Detail Order</h1>
+  <form th:action="@{/order/customer/edit}" th:object="${order}" method="post">
+    <input type="hidden" th:field="*{orderId}" th:value="${order.getOrderId()}">
+    <input type="hidden" th:field="*{customer}" th:value="${order.getCustomer()}">
+    <input type="hidden" th:field="*{orderStatus}" th:value="${order.getOrderStatus()}">
+
+    <span>Method payment</span>
+    <select th:field="*{methodPayment}">
+      <option  th:checked="${order.methodPayment=='Apple'}" value="Apple">Apple</option>
+      <option th:checked="${order.getMethodPayment()=='Momo'}" value="Momo">Momo</option>
+      <option th:checked="${order.getMethodPayment()=='Banking'}" value="Banking" >Banking</option>
+      <option th:checked="${order.getMethodPayment()=='Cash'}" value="Cash">Cash</option>
+    </select>
+    <br>
+
+    <span>Time of Order</span>
+    <input type="datetime-local" th:field="*{timeOrder}" th:value="${order.getTimeOrder()}"/>
+    <br>
+
+    <span>Number of people</span>
+    <input  type="text" th:value="${order.getNumberCustomer()}" th:field="*{numberCustomer}"/>
+    <br>
+
+    <span>Phone number</span>
+    <input  type="text" th:value="${order.getPhoneCustomer()}" th:field="*{phoneCustomer}"/>
+    <br>
+
+    <input th:if="${order.getOrderStatus().equalsIgnoreCase('Wait Set')}" type="submit" value="Edit">
+
+
+
+  </form>
+  <a th:if="${order.getOrderStatus().equalsIgnoreCase('Wait Set')}" th:href="@{/order/customer/delete/{id}(id=${order.getOrderId()})}">Delete</a>
+  <a th:if="${order.getOrderStatus().equalsIgnoreCase('Wait Pay')}" th:href="@{/order/customer/pay/{id}(id=${order.getOrderId()})} ">Pay</a>
+</body>
+</html>

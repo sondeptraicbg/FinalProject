@@ -11,4 +11,6 @@ import java.util.Optional;
 
 public interface OrderDetailRepo extends CrudRepository<OrderDetail, OrderDetailID> {
     List<OrderDetail> getAllByOrderDetailID_OrderId_OrderId(int id);
+
+    Optional<OrderDetail> getOrderDetailByOrderDetailID(OrderDetailID orderDetailID);
 }
