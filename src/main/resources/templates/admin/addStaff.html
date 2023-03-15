@@ -3,44 +3,87 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>ADD STAFF</title>
+    <link th:href="@{/css/login.css}" type="text/css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/2b070e02a1.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <h2 th:text="${error}"></h2>
-    <form th:action="@{/admin/addstaff/{id}(id=${restaurant.getResID()})}" method="post" th:object="${staff}">
-        <label>Name: </label><input type="text" th:value="${staff.getEmpName()}" th:field="*{empName}"><br>
-        <label>Email: </label><input type="text" th:value="${staff.getEmail()}" th:field="*{email}"><br>
-        <label>Password: </label><input type="text" th:value="${staff.getPassword()}" th:field="*{password}"><br>
-        <label>Phone: </label><input type="text" th:value="${staff.getPhoneNumber()}" th:field="*{phoneNumber}"><br>
-        <label>Salary: </label><input type="text" th:value="${staff.getSalary()}" th:field="*{salary}"><br>
+<div class="container"
+     style="background-image: url('http://drive.google.com/uc?export=view&id=1OAHx8j-8IjfF_U11HfTKX6n2Y-zT_SSH');">
+    <div class="login-box">
+<!--        <div th:if="${error}" style="color:red">-->
+<!--            <span th:text="${error}"></span>-->
+<!--        </div>-->
+        <form class="login" th:action="@{/admin/addstaff/{id}(id=${restaurant.getResID()})}" method="post"
+              th:object="${staff}">
 
-        <select name="roleIdd" onchange="handleRoleChange(this)">
-            <option th:each="r : ${roleList}" th:text="${r.getRoleName()}" th:value="${r.getRoleId().getRoleId()}"></option>
-            <option value="-1">Other</option>
-        </select>
+            <div class="form-group">
+                <input class="form-control" placeholder="Name" type="text" th:value="${staff.getEmpName()}"
+                       th:field="*{empName}">
+            </div>
 
-        <div id="other-role-details" style="display:none" th:object="${newRole}">
-            <input type="hidden" th:value="${roleList.size() + 1}" name="newRoleId">
-            <input type="text" name="roleName" th:field="*{roleName}">
+            <div class="form-group">
+                <input class="form-control" placeholder="Email" type="text" th:value="${staff.getEmail()}"
+                       th:field="*{email}">
+            </div>
 
-            <label >Permissions:</label>
-            <label><input th:field="*{edit}" type="checkbox" name="canEdit"> Edit</label>
-            <label><input th:field="*{view}" type="checkbox" name="canView"> View</label>
-            <label><input th:field="*{create}" type="checkbox" name="canCreate"> Create</label>
-            <label><input th:field="*{delete}" type="checkbox" name="canDelete"> Delete</label>
+            <div class="form-group">
+                <input class="form-control" placeholder="Password" type="text" th:value="${staff.getPassword()}"
+                       th:field="*{password}">
+            </div>
+
+            <div class="form-group">
+                <input class="form-control" placeholder="Phone" type="text" th:value="${staff.getPhoneNumber()}"
+                       th:field="*{phoneNumber}">
+            </div>
+            <div class="form-group">
+                <input class="form-control" placeholder="Salary" type="text" th:value="${staff.getSalary()}"
+                       th:field="*{salary}"><br>
+            </div>
+
+            <select class="form-control" name="roleIdd" onchange="handleRoleChange(this)">
+                <option th:each="r : ${roleList}" th:text="${r.getRoleName()}"
+                        th:value="${r.getRoleId().getRoleId()}">
+                </option>
+                <option value="-1">Other</option>
+            </select>
+
+            <div class="form-group" id="other-role-details" style="display:none" th:object="${newRole}">
+
+                <input type="hidden" th:value="${roleList.size() + 1}" name="newRoleId">
+                <input placeholder="Role name" class="form-control" type="text" name="roleName" th:field="*{roleName}">
+
+                <label>Permissions:</label>
+                <label><input class="form-control" th:field="*{edit}" type="checkbox" name="canEdit"> Edit</label>
+                <label><input class="form-control" th:field="*{view}" type="checkbox" name="canView"> View</label>
+                <label><input class="form-control" th:field="*{create}" type="checkbox" name="canCreate"> Create</label>
+                <label><input class="form-control" th:field="*{delete}" type="checkbox" name="canDelete"> Delete</label>
+            </div>
+
+            <div class="form-group">
+                <button class="full-btn" type="submit">ADD</button>
+            </div>
+        </form>
+        <div class="homepage">
+            <a th:href="@{/home/admin}">
+                <i class="fas fa-chevron-left"></i>
+                Back to home
+            </a>
         </div>
+    </div>
+</div>
 
-        <input type="submit" value="Add">
-    </form>
 
-    <script>
-        function handleRoleChange(select) {
-            if (select.value === "-1") {
-                document.getElementById("other-role-details").style.display = "block";
-            } else {
-                document.getElementById("other-role-details").style.display = "none";
-            }
+<script>
+    function handleRoleChange(select) {
+        if (select.value === "-1") {
+            document.getElementById("other-role-details").style.display = "block";
+        } else {
+            document.getElementById("other-role-details").style.display = "none";
         }
-    </script>
+    }
+</script>
 </body>
+
 </html>
