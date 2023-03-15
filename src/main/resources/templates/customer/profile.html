@@ -30,49 +30,9 @@
 
 <body>
 
-    <button id="back-button">Go back</button>
-    <script>
-        document.getElementById("back-button").addEventListener("click", function() {
-            window.history.back();
-        });
-    </script>
-
-<div class="wrapper">
-
-
-    <div class="body-overlay"></div>
-
-    <!-------------------------sidebar------------>
-    <!-- Sidebar  -->
-    <nav id="sidebar">
-
-        <!-- Ten va anh dai dien -->
-        <div class="sidebar-header">
-            <a href=""><img src="images/icons/page-logo.png" style="height: 100px; width: 100px;" class="img-fluid" /></a>
-        </div>
-
-
-        <ul class="list-unstyled components">
-
-            <li class="active">
-                <a href="#" class="dashboard"><i class="material-icons">dashboard</i>
-                    <span>Dashboard</span></a>
-            </li>
-            <li>
-                <a href="#" class="dashboard"><i class="material-icons">history</i>
-                    <span>Oder History</span></a>
-            </li>
-        </ul>
-    </nav>
-
-
 
 
     <!--------page-content---------------->
-
-    <div id="content">
-
-        <!--top--navbar----design--------->
 
         <div class="top-navbar">
             <div class="xp-topbar">
@@ -81,68 +41,12 @@
                 <div class="row">
                     <!-- Start XP Col -->
                     <div class="col-2 col-md-1 col-lg-1 order-2 order-md-1 align-self-center">
-                        <div class="xp-menubar">
-                <span class="material-icons text-white">signal_cellular_alt
-                </span>
-                        </div>
+                        <a class="xp-menubar" th:href="@{/home/customer}">
+                            <a th:href="@{/home/customer}"><img style="width: 100px"
+                                    src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E" alt=""></a>
+                        </a>
                     </div>
-                    <!-- End XP Col -->
-
-                    <!-- Start XP Col -->
-                    <div class="col-md-5 col-lg-3 order-3 order-md-2">
-                        <div class="xp-searchbar">
-                            <form>
-                                <div class="input-group">
-                                    <input type="search" class="form-control" placeholder="Search">
-                                    <div class="input-group-append">
-                                        <button class="btn" type="submit" id="button-addon2">GO</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- End XP Col -->
-
-                    <!-- Start XP Col -->
-                    <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
-                        <div class="xp-profilebar text-right">
-                            <nav class="navbar p-0">
-                                <ul class="nav navbar-nav flex-row ml-auto">
-
-
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link" href="#" data-toggle="dropdown">
-                                            <img src="img/user.jpg" style="width:40px; border-radius:50%;" />
-                                            <span class="xp-user-live"></span>
-                                        </a>
-                                        <ul class="dropdown-menu small-menu">
-                                            <li>
-                                                <a href="#">
-                            <span class="material-icons">
-                              person_outline
-                            </span>Profile
-                                                </a>
-                                            </li>
-
-                                            <li>
-                                                <a href="#"><span class="material-icons">
-                              history</span>Order History</a>
-                                            </li>
-
-                                            <li>
-                                                <a href="#"><span class="material-icons">
-                              logout</span>Logout</a>
-                                            </li>
-
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                    <!-- End XP Col -->
                 </div>
-                <!-- End XP Row -->
             </div>
         </div>
 
@@ -230,22 +134,6 @@
                                 </tr>
                                 </tbody>
                             </table>
-
-                            <!-- Phân trang -->
-                            <!-- <div class="clearfix">
-                              <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                              <ul class="pagination">
-                                <li class="page-item disabled"><a href="#">Previous</a></li>
-                                <li class="page-item"><a href="#" class="page-link">1</a></li>
-                                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                                <li class="page-item"><a href="#" class="page-link">4</a></li>
-                                <li class="page-item"><a href="#" class="page-link">5</a></li>
-                                <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                              </ul>
-                            </div> -->
-
-
                         </div>
                     </div>
 
@@ -270,39 +158,11 @@
                 </div>
             </div>
         </footer>
-    </div>
-</div>
-
-
-
-
-
-
-
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>
-<script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
-
-
-<script>
-
-    $(document).ready(function () {
-        $(".xp-menubar").on('click', function () {
-            $('#sidebar').toggleClass('active');
-            $('#content').toggleClass('active');
-        });
-
-        $(".xp-menubar,.body-overlay").on('click', function () {
-            $('#sidebar,.body-overlay').toggleClass('show-nav');
-        });
-
-    });
-
-</script>
 
 
 

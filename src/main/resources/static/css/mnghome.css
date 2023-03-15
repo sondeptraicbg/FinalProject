@@ -1,0 +1,68 @@
+/**{*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    box-sizing: border-box;*/
+/*}*/
+body {
+    background-image: linear-gradient(to bottom right, #fcfce2,#f3f3f3);
+}
+.row {
+    margin-top: 20px;
+    margin-left: 100px;
+    font-size: 30px;
+}
+/*.row img{*/
+/*    margin-right: 50px;*/
+/*    margin-bottom: 50px;*/
+/*}*/
+.tab_bar{
+    display: inline;
+    display: flex;
+    justify-content: space-around;
+    /*justify-content: center;*/
+    align-items: center;
+}
+.btn_tarbar{
+    font-size: 30px;
+    text-decoration:solid;
+}
+.tar_bar span{
+    justify-content: space-around;
+}
+.table, th, td {
+    border: 1px solid black;
+    text-align:  center;
+}
+.headerTable{
+    display: flex;
+    justify-content: space-between;
+}
+.headerTable a{
+    text-decoration: none;
+}
+
+.tar_bar span button {
+    border: none;
+}
+
+.btn_tarbar button{
+    border: none;
+    background-color: #fcfce2;
+}
+.btnLogout{
+
+}
+.table a{
+    border: 1px solid snow;
+    border-radius: 10%;
+    padding: 10px 10px;
+    margin: 10px 10px;
+    background-color: whitesmoke;
+}
+.btnAddNew{
+    background-color: bisque;
+    border-radius: 10px;
+    border: 1px solid whitesmoke;
+    padding: 10px  10px;
+    margin: 10px 10px;
+}
