@@ -64,6 +64,7 @@ public class OrderController {
         List<Tableq> tableqs = tableService.getTableByResId(restaurant.getResID());
         model.addAttribute("tableqs", tableqs);
 
+
         List<OrderDetail> listOrderDetailByOrderID = orderDetailService.getListOrderDetailByOrderID(id);
         model.addAttribute("listOrderDetail", listOrderDetailByOrderID);
 

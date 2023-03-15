@@ -3,25 +3,61 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
+    <script src="https://kit.fontawesome.com/2b070e02a1.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-
-
-    <button id="back-button">Go back</button>
-
-    <script>
-        document.getElementById("back-button").addEventListener("click", function() {
-            window.history.back();
-        });
-    </script>
-
-    <div th:object="${order}">
-      <h1 th:text="${order.getCustomer().getCusName()}"></h1>
-      <h1 th:text="${order.getOrderStatus()}"></h1>
-      <h1 th:text="${order.getMethodPayment()}"></h1>
-      <h1 th:text="${order.getPhoneCustomer()}"></h1>
-      <h1 th:text="${order.getStaff().getEmpName()}"></h1>
+<header>
+    <div class="logo">
+        <a th:href="@{/home/customer}"><img
+                src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E" alt=""></a>
     </div>
+    <div class="menu">
+        <!-- LIST COMPANY -->
+        <form th:action="@{/home/customer/search}" method="post">
+            <select name="company" id="company">
+                <option value="">Brands</option>
+                <option th:each="company : ${listCompany}" th:value="${company.getCompanyID()}"
+                        th:text="${company.getCompanyName()}">
+                </option>
+            </select>
+            <select name="city" id="city">
+                <option value="">City</option>
+                <option th:each="city : ${listCity}" th:value="${city}" th:text="${city}">
+                </option>
+            </select>
+            <input type="text" placeholder="Restaurant Name" name="restaurantName" id="restaurantName" value="">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+    <div class="others">
+        <!--PROFILE-->
+        <a th:href="@{/customer/profile}"><i class="fa fa-user"></i> </a>
+        <!--LOGIN BUTTON-->
+        <!--        <a th:href="@{/login/logout}"><i class="fa fa-sign-in"></i> </a>-->
+        <!--LOGOUT BUTTON-->
+        <a th:href="@{/login/logout}"><i class="fa fa-sign-out"></i> </a>
+    </div>
+</header>
+
+<button id="back-button">Go back</button>
+
+
+
+<script>
+    document.getElementById("back-button").addEventListener("click", function () {
+        window.history.back();
+    });
+</script>
+
+<div th:object="${order}">
+    <h1 th:text="${order.getCustomer().getCusName()}"></h1>
+    <h1 th:text="${order.getOrderStatus()}"></h1>
+    <h1 th:text="${order.getMethodPayment()}"></h1>
+    <h1 th:text="${order.getPhoneCustomer()}"></h1>
+    <h1 th:text="${order.getStaff().getEmpName()}"></h1>
+</div>
 </body>
 </html>
