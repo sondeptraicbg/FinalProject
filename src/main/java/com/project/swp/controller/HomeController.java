@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -32,6 +33,8 @@ public class HomeController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private OrderService orderService;
     @Autowired
     private AdminHomeService adminHomeService;
 
@@ -75,6 +78,16 @@ public class HomeController {
     }
 
     // Manager place // =========================================================================================
+
+    @GetMapping("/search/{resID}")
+    public String getOrderByTime(@RequestParam("startTimeOrder")LocalDateTime startTimeOrder,
+                                 @RequestParam("endTimeOrder") LocalDateTime endTimeOrder,
+                                 Model model){
+        List<Order> order = orderService.getOrderByTime(startTimeOrder,endTimeOrder);
+        model.addAttribute("order", order);
+        return "redirect:/home/manager";
+    }
+
     @GetMapping("/manager")
     public String ManagerHome(Model model, HttpSession session) {
         Staff staff = (Staff) session.getAttribute("staff");
@@ -133,11 +146,11 @@ public class HomeController {
         return "redirect:/home/manager";
     }
     // delete staff by id
-    @GetMapping("/menu/delete/{id}")
-    public String deleteStaffByID(@PathVariable("id") int empID) throws Exception {
-        staffService.deleteStaffById(empID);
-        return "redirect:/home/manager";
-    }
+//    @GetMapping("/menu/delete/{id}")
+//    public String deleteStaffByID(@PathVariable("id") int empID) throws Exception {
+//        staffService.deleteStaffById(empID);
+//        return "redirect:/home/manager";
+//    }
 
     // Add new food
     @GetMapping("/new/{id}")
