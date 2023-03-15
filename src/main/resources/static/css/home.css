@@ -349,3 +349,83 @@ footer li ::after{
     margin-top: 10px;
 }
 
+.rating {
+    display: flex;
+    position: absolute;
+    transform: rotateY(180deg);
+    margin-top: 100px;
+}
+
+.rating input{
+    display: none;
+}
+
+.new-cmt {
+    margin-top: 20px;
+    margin-bottom: 80px;
+}
+
+.new-cmt form{
+    display: flex;
+}
+
+.rating label {
+    display: block;
+    cursor: pointer;
+    width: 25px;
+    margin-left: 10px;
+}
+
+.rating label:before {
+    content:'\f005';
+    font-family: fontAwesome;
+    position: relative;
+    display: block;
+    font-size: 25px;
+    color: #101010;
+}
+.rating label:after {
+    content:'\f005';
+    font-family: fontAwesome;
+    position: absolute;
+    display: block;
+    font-size: 25px;
+    color: #f26522;
+    top: 0;
+    opacity: 0;
+    transition: .5s;
+    text-shadow: 0 2px 5px rgba(240, 233, 6, 0.5);
+}
+
+.rating label:hover:after,
+.rating label:hover ~ label:after,
+.rating input:checked  ~ label:after{
+    opacity: 1;
+}
+
+.detail-left-rate-item h1{
+    font-size: 25px;
+}
+
+.detail-left-rate-item{
+    margin-top: 10px;
+}
+
+.title{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.cmt-container{
+    align-items: center;
+}
+
+.cmt-item{
+    margin-top: 20px;
+    margin-left: 30px;
+}
+.cmt-item span{
+    font-size: 18px;
+
+}
+
