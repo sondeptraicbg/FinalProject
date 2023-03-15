@@ -38,7 +38,7 @@
                     <button class="full-btn" type="submit">Login</button>
                 </div>
                 <div class="form-group">
-                    <p>Not Registered? <a href="register.html">Sign Up</a></p>
+                    <p>Not Registered? <a th:href="@{/register/customer}">Sign Up</a></p>
                 </div>
             </form>
 
@@ -59,7 +59,7 @@
             </div>
 
             <div class="homepage">
-                <a href="#">
+                <a th:href="@{/home/default}">
                     <i class="fas fa-chevron-left"></i>
                     Back to home
                 </a>
