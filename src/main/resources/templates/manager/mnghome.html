@@ -3,79 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!----css3---->
+    <link rel="stylesheet" th:href="@{/css/mnghome.css}">
+    <!--google material icon-->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <style>
+        .backgroundImage img{
+            width: 100%;
+            height: 400px;
+        }
+        .headerRestaurant{
+            margin-bottom: 50px;
+        }
+        .logo img{
+            width: 150px;
+            height: 150px;
+        }
+    </style>
 </head>
 <body>
 
-    <div style="border: 2px solid; margin-bottom: 20px" >
-        <h1 th:object="${staff}">
-            <span>Manager(this account) </span>
-            <span th:text="${staff.getEmpName()}"></span>
-        </h1>
-
-        <a th:href="@{/login/logout}">
-            Logout
-        </a>
+<!-- navbar -->
+<div class="tab_bar">
+    <div class="logo">
+        <img src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E">
     </div>
 
-    <div style="border: 2px solid; margin-bottom: 20px" th:object="${restaurant}">
-        <h1>Restaurant</h1>
-        <h3 th:text="${restaurant.getResName()+ ' in ' + restaurant.getCity()}"></h3>
+    <div class="btn_tarbar">
+        <button class="tablinks" onclick="openCity(event, 'London')">Menu</button>
     </div>
 
-    <!-- LIST EMPLOYEE -->
-    <h1>List Employee</h1>
-    <div style="border: 2px solid; margin-bottom: 20px" th:each="employee : ${listEmployee}">
-        <a th:href="@{/home/manager/em/{id}(id=${employee.getEmpId()})}">
-            <div>
-                <h3 th:text="${employee.getEmpName()}"></h3>
-                <h3 th:text="${employee.getEmail()}"></h3>
-            </div>
-        </a>
+    <div class="btn_tarbar">
+        <button class="tablinks" onclick="openCity(event, 'Paris')">Order</button>
     </div>
 
-
-    <!-- LIST ORDER -->
-    <div>
-        <a th:href="@{/order/new/{id}(id=${restaurant.getResID()})}">Add order</a>
-    </div>
-    <div style="border: 2px solid; margin-bottom: 20px" th:each="order : ${listOrder}">
-        <h1>List order</h1>
-        <div th:if="${order.customer != null}">
-            <a th:href="@{/order/{id}(id=${order.getOrderId()})}">View Detail</a>
-            <h3 th:text="${order.getOrderId()}"></h3>
-            <h3 th:text="${order.getOrderStatus()}"></h3>
-            <h3 th:text="${order.getTimeOrder()}"></h3>
-        </div>
-        <div th:if="${order.customer == null}">
-            <h3 th:text="${order.getOrderId()}"></h3>
-            <h3 th:text="${order.getOrderStatus()}"></h3>
-            <h3 th:text="${order.getTimeOrder()}"></h3>
-        </div>
-        <a th:method="GET" th:href="@{/order/update/{id}(id = ${order.orderId})}">Edit</a>
+    <div class="btn_tarbar">
+        <button class="tablinks" onclick="openCity(event, 'Tokyo')">Staff</button>
     </div>
 
-    <!-- LIST RATE -->
-    <div style="border: 2px solid; margin-bottom: 20px" th:each="rate : ${listRate}">
-        <h1>List rate (comment)</h1>
-            <div>
-                <h3 th:text="${rate.getRateId().getCustomer().getCusName()}"></h3>
-                <h3 th:text="${rate.getComment()}"></h3>
-                <h3 th:text="${rate.getRating()}"></h3>
-            </div>
-    </div>
-
-    <!-- LIST MENU -->
-    <a th:href="@{/home/new/{id}(id=${restaurant.getResID()})}">Add New Food</a>
-    <div style="border: 2px solid; margin-bottom: 20px" th:each="menu : ${listMenu}">
-        <h1>List food(menu)</h1>
-        <div>
-            <h3 th:text="${menu.getCategoryMenu().getCateName()}"></h3>
-            <h3 th:text="${menu.getDescriptionFood()}"></h3>
-            <h3 th:text="${menu.getPrice()}"></h3>
-            <a th:href="@{/home/menu/edit/{id}(id = ${menu.foodId})}">Edit</a>
-            <a th:href="@{/home/menu/delete/{id}(id = ${menu.foodId})}">Delete</a>
+    <div th:object="${staff}">
+        <span th:text="${staff.getEmpName()}"></span>
+        <div class="btnLogout">
+            <a th:href="@{/login/logout}">Logout</a>
         </div>
     </div>
+</div>
+
+
+<div class="headerRestaurant" style="text-align: center; margin: 50px;" th:object="${restaurant}">
+<!--    <h1>Restaurant</h1>-->
+    <p class="backgroundImage">
+        <img th:src="${restaurant.getPicture()}">
+    </p>
+    <h3 th:text="${restaurant.getResName()+ ' in ' + restaurant.getCity()}"></h3>
+</div>
+
+
+<!-- Tab content -->
+<br>
+
+<!--list menu-->
+<div id="London" class="tabcontent">
+    <div class="headerTable">
+        <h1 class="context_table">Menu</h1>
+        <h3 class="btnAddNew">
+            <a th:href="@{/home/new/{id}(id=${restaurant.getResID()})}">Add New Food</a>
+        </h3>
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Food Name</th>
+            <th scope="col">Category Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="menu : ${listMenu}">
+            <td th:text="${menu.getFoodName()}"></td>
+            <td th:text="${menu.getCategoryMenu().getCateName()}"></td>
+            <td th:text="${menu.getDescriptionFood()}"></td>
+            <td th:text="${menu.getPrice()}"></td>
+            <td>
+                <a th:href="@{/home/menu/edit/{id}(id = ${menu.foodId})}">Edit</a>
+                <a th:href="@{/home/menu/delete/{id}(id = ${menu.foodId})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<br>
+<br>
+
+<!--list order-->
+<div id="Paris" class="tabcontent">
+    <div class="headerTable">
+        <h1 class="context_table">Order</h1>
+        <h3 class="btnAddNew">
+            <a th:href="@{/order/new/{id}(id=${restaurant.getResID()})}">Add order</a>
+        </h3>
+    </div>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Number customer</th>
+            <th scope="col">Status</th>
+            <th scope="col">Time Order</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${listOrder}">
+            <td th:text="${order.getOrderId()}"></td>
+            <td th:text="${order.getOrderStatus()}"></td>
+            <td th:text="${order.getTimeOrder()}"></td>
+            <td >
+                <span th:if="${order.customer != null}">
+                    <a th:href="@{/order/{id}(id=${order.getOrderId()})}">View Detail</a>
+                </span>
+                <span th:if="${order.customer == null}">
+                </span>
+            </td>
+            <td>
+                <a th:method="GET" th:href="@{/order/update/{id}(id = ${order.orderId})}">Edit</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<br>
+<!--list staff-->
+<div id="Tokyo" class="tabcontent">
+    <div class="headerTable">
+        <h1 class="context_table">Employee</h1>
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Name Employee</th>
+            <th scope="col">Email</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${listEmployee}">
+            <td th:text="${employee.getEmpId()}"></td>
+            <th scope="row" th:text="${employee.getEmpName()}"></th>
+
+            <td th:text="${employee.getEmail()}"></td>
+            <td><a th:href="@{/home/manager/em/{id}(id=${employee.getEmpId()})}">View Detail</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<br>
+
+
+<!-- LIST RATE -->
+<h1 class="context_table">Rating</h1>
+<table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+        <th scope="col">Customer Name</th>
+        <th scope="col">Comment</th>
+        <th scope="col">Rating point</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="rate : ${listRate}">
+        <td th:text="${rate.getRateId().getCustomer().getCusName()}"></td>
+        <td th:text="${rate.getComment()}"></td>
+        <td th:text="${rate.getRating()}"></td>
+    </tr>
+    </tbody>
+</table>
 
 </body>
+<script>
+    function openCity(evt, cityName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
 </html>

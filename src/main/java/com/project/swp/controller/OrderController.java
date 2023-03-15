@@ -62,7 +62,6 @@ public class OrderController {
         Restaurant restaurant = (Restaurant) session.getAttribute("restaurant");
         List<Tableq> tableqs = tableService.getTableByResId(restaurant.getResID());
         model.addAttribute("tableqs", tableqs);
-
         return "manager/updateOrder";
     }
 
