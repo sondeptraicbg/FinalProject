@@ -3,25 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <title>Company List</title>
+
+  <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <style>
+    .container{
+      background-image: linear-gradient(to bottom right, bisque,#f3f3f3);
+    }
+    .panel-title{
+      margin-bottom: 20px;
+      margin-top: 20px;
+      margin-left: 13px;
+      font-size: 30px;
+
+    }
+    .btn{
+      font-size: 15px;
+      padding: 10px 20px;
+      margin-bottom: 30px;
+    }
+    .imageBusinessLinces img{
+      width: 400px;
+      height: 600px;
+      border: none;
+
+    }
+    .btn{
+      margin-left: 12px;
+    }
+  </style>
 </head>
 <body>
-<h1>Company </h1>
-<label>Company Name</label>
-<h3 th:text="${company.getCompanyName()}"></h3>
-<label>Email</label>
-<h3 th:text="${company.getEmail()}"></h3>
-<label>Hotline</label>
-<h3 th:text="${company.getHotline()}"></h3>
-<label>Bussiness License</label>
-<img th:src="'http://drive.google.com/uc?export=view&id=' + ${fileId}">
-<form th:action="@{/boss/approve}" method="post">
-  <input type="hidden" id="companyId" name="companyId" th:value="${company.getCompanyID()}" />
-  <select name="status">
-    <option th:value="WaitResponse" th:selected="${company.getStatus() == 'WaitResponse'}">Wait Response</option>
-    <option th:value="Active" th:selected="${company.getStatus() == 'Active'}">Active</option>
-    <option th:value="UnActive" th:selected="${company.getStatus() == 'UnActive'}">Un Active</option>
-  </select>
-  <button type="submit">Save</button>
-</form>
+<div class="container">
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Company</h3>
+    </div>
+    <div class="panel-body">
+      <form id="formBook" th:object="${company}">
+        <!-- Company Name // -->
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Company Name</label>
+          <div class="col-sm-9">
+            <input class="form-control" readonly type="text" id="CompanyName" name="CompanyName"  th:value="${company.companyName}" th:field="*{companyName}">
+          </div>
+        </div>
+
+        <!-- Email // -->
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Email</label>
+          <div class="col-sm-9">
+            <input class="form-control" readonly type="text" id="Email" name="Email" th:value="${company.email}" th:field="*{email}"/>
+          </div>
+        </div>
+
+        <!-- Hotline // -->
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Hotline</label>
+          <div class="col-sm-9">
+            <input class="form-control" readonly type="text" id="Hotline" name="Hotline" th:value="${company.hotline}" th:field="*{hotline}">
+          </div>
+        </div>
+
+        <!--Bussiness License-->
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Bussiness License</label>
+          <div class="col-sm-5 imageBusinessLinces">
+            <img th:src="'http://drive.google.com/uc?export=view&id=' + ${fileId}">
+          </div>
+        </div>
+        <hr>
+      </form>
+
+
+      <form th:action="@{/boss/approve}" method="post">
+        <div class="form-group">
+          <label class="col-sm-3 control-label">Status</label>
+          <input type="hidden" id="companyId" name="companyId" th:value="${company.getCompanyID()}" />
+          <div class="col-sm-4">
+            <select  class="form-control" name="status">
+              <div th:if="${company.status == 'Active'}">
+                <option th:value="Active" th:selected="${company.getStatus() == 'Active'}">Active</option>
+                <option th:value="UnActive" th:selected="${company.getStatus() == 'UnActive'}">Un Active</option>
+              </div>
+              <div th:if="${company.status == 'WaitResponse'}">
+                <option th:value="WaitResponse" th:selected="${company.getStatus() == 'WaitResponse'}">Wait Response</option>
+                <option th:value="Active" th:selected="${company.getStatus() == 'Active'}">Active</option>
+                <option th:value="UnActive" th:selected="${company.getStatus() == 'UnActive'}">Un Active</option>
+              </div>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Save</button>
+
+      </form>
+
+    </div><!-- panel-body // -->
+  </section><!-- panel// -->
+</div> <!-- container// -->
 </body>
 </html>
+
