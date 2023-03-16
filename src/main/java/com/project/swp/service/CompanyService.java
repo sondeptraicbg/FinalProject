@@ -16,7 +16,7 @@ public class CompanyService {
     public List<Company> getListCompany() {
         return companyRepo.findAll();
     }
-    public Company findCompanyByName(int companyId) {
+    public Company findCompanyById(int companyId) {
         return companyRepo.findCompanyByCompanyID(companyId).orElse(null);
     }
 
@@ -25,6 +25,10 @@ public class CompanyService {
     public Company authenticate(String email, String password){
         Company company = companyRepo.findFirstByEmailAndPassword(email, password);
         return company != null  ? company : null;
+    }
+
+    public void SaveCompany(Company company) {
+        companyRepo.save(company);
     }
 
 }

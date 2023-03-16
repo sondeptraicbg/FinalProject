@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Boss</title>
+  <link th:href="@{/css/login.css}" type="text/css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/2b070e02a1.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container" style="background-image: url('http://drive.google.com/uc?export=view&id=1OAHx8j-8IjfF_U11HfTKX6n2Y-zT_SSH');">
+  <div class="login-box">
+    <div th:if="${errorNotice}" style="color:red">
+      <span th:text="${errorNotice}"></span>
+    </div>
+    <div class="user-icon">
+      <i class="far fa-user"></i>
+    </div>
+    <div style="font-size: 30px; ">Login</div>
+    <form class="login" th:action="@{/login/boss}" method="post">
+      <div class="form-group">
+        <input type="text" placeholder="Username" id="username" class="form-control" name="username">
+      </div>
+      <div class="form-group">
+        <input type="password" placeholder="Password" id="password" class="form-control" name="password">
+      </div>
+      <div class="form-group">
+        <a href="#">Forget Password?</a>
+      </div>
+      <div class="form-group">
+        <label for="rememberme">
+          <input type="checkbox" name="rememberme" id="rememberme">
+          Remember Password
+        </label>
+      </div>
+      <div class="form-group">
+        <button class="full-btn" type="submit">Login</button>
+      </div>
+      <div class="form-group">
+        <p>Not Registered? <a href="register.html">Sign Up</a></p>
+      </div>
+    </form>
+
+    <div class="serparater">
+      Or login via social links
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

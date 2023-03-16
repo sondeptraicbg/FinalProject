@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -61,7 +62,7 @@ public class HomeController {
                                     @RequestParam(name = "restaurantName", required = false, defaultValue = "") String restaurantName,
                                     @RequestParam(name = "category", required = false, defaultValue = "") String category,
                                     Model model){
-        Company company = companyService.findCompanyByName(companyId);
+        Company company = companyService.findCompanyById(companyId);
 
         List<Restaurant> listRestaurant = restaurantService.searchRestaurant(company, city, restaurantName, category);
         model.addAttribute("listRestaurant", listRestaurant);
@@ -233,6 +234,27 @@ public class HomeController {
 
         List<Revenue> listRevenue = adminHomeService.getRevenueByMonth(restaurant.getResID());
         model.addAttribute("listRevenue", listRevenue);
+
+        List<Revenue> Revenue = adminHomeService.getRevenueByRestaurantID(restaurant.getResID());
+        List<Double> listRevenueMonth = new ArrayList<>();
+        List<Integer> listMonth = new ArrayList<>();
+        List<Integer> listYear = new ArrayList<>();
+        double revenueYear = 0.0;
+        for(Revenue revenue : Revenue){
+            listRevenueMonth.add(revenue.getRevenue());
+            listMonth.add(revenue.getMonth());
+            listYear.add(revenue.getYear());
+            if(revenue.getYear() == 2022){
+                revenueYear += revenue.getRevenue();
+            }
+            else if (revenue.getYear() == 2023){
+                revenueYear += revenue.getRevenue();
+            }
+        }
+        model.addAttribute("revenueYear",revenueYear);
+        model.addAttribute("listYear",listYear);
+        model.addAttribute("listMonth",listMonth);
+        model.addAttribute("listRevenueMonth",listRevenueMonth);
         return "admin/restaurant";
     }
 
@@ -246,6 +268,14 @@ public class HomeController {
         model.addAttribute("listRate", rateList);
         List<Menu> menuList = managerHomeService.getMenuByRestaurant(restaurant.getResID());
         model.addAttribute("listMenu", menuList);
+    }
+
+    // Boss //=======================================================================================
+    @GetMapping("/boss")
+    public String BossHome(Model model, HttpSession session) {
+        List<Company> listCompany = companyService.getListCompany();
+        model.addAttribute("listCompany", listCompany);
+        return "boss/home";
     }
 
     // Default home // ==========================================================================================
