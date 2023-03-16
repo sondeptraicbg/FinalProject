@@ -29,65 +29,6 @@
 
 <!--        <input type="text" readonly th:field="*{orderId}" th:value="${order.orderId}"/>-->
 
-<!--        <span>Method payment</span>-->
-<!--        <select th:field="*{methodPayment}">-->
-<!--            <option  th:checked="${order.methodPayment=='Apple'}" value="Apple">Apple</option>-->
-<!--            <option th:checked="${order.getMethodPayment()=='Momo'}" value="Momo">Momo</option>-->
-<!--            <option th:checked="${order.getMethodPayment()=='Banking'}" value="Banking" >Banking</option>-->
-<!--            <option th:checked="${order.getMethodPayment()=='Cash'}" value="Cash">Cash</option>-->
-<!--        </select>-->
-<!--        <br>-->
-
-<!--        <span>Time of Order</span>-->
-<!--        <input type="datetime-local" th:field="*{timeOrder}" th:value="${order.getTimeOrder()}"/>-->
-<!--        <br>-->
-
-<!--        <span>Total</span>-->
-<!--        <input readonly type="text" th:field="*{total}"/>-->
-<!--        <br>-->
-
-<!--        <span>Employee</span>-->
-<!--        <input type="text" th:if="${order.staff != null}" th:value="${order.staff.empId}" readonly/>-->
-<!--        <br>-->
-
-<!--        <span>Table</span>-->
-<!--&lt;!&ndash;        <select name="">&ndash;&gt;-->
-<!--&lt;!&ndash;            <option th:each="tb : ${tableqs}" th:attr="data-table='${#strings.escapeJson(#json.toJson(tb))}'" th:text="${tb.getTableId().getTableId()}"></option>&ndash;&gt;-->
-<!--&lt;!&ndash;        </select>&ndash;&gt;-->
-
-<!--        <div th:each="tb : ${tableqs}">-->
-<!--            <input  type="checkbox" th:disabled="${order.getOrderStatus() != 'Wait Set'}" th:checked="${order.getStringTable() != null and !order.getStringTable().isEmpty() and order.getStringTable().contains(tb.getTableId().getTableId())}" name="tb" th:value="${tb.getTableId().getTableId()}" th:text="${tb.getTableId().getTableId()}">-->
-<!--            <input  type="hidden" th:if="${order.getOrderStatus() != 'Wait Set' and order.getStringTable() != null and !order.getStringTable().isEmpty() and order.getStringTable().contains(tb.getTableId().getTableId())}" name="tb"  th:value="${tb.getTableId().getTableId()}">-->
-<!--        </div>-->
-
-<!--        <span>Status</span>-->
-<!--        <input type="radio" name="pay" th:field="*{orderStatus}" value="Wait Set">Wait Set-->
-<!--        <input type="radio" name="pay" th:field="*{orderStatus}" value="Wait Pay">Wait Pay-->
-<!--        <input type="radio" name="pay" th:field="*{orderStatus}" value="Done">Done-->
-
-
-<!--        <span>Order Detail</span>-->
-<!--        <table>-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--                <th>Food Name</th>-->
-<!--                <th>Quantity</th>-->
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--            <tr th:each="invoice: ${listInvoice}">-->
-<!--                <td th:text="${invoice.getInvoiceID().getMenu().getFoodName()}"></td>-->
-<!--                <td>-->
-<!--                    <input type="number" readonly name="quantity" min="0" th:value="${invoice.getActualQuantity()}"/>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
-<!--        <input type="submit" value="Save">-->
-<!--    </form>-->
-
-
-
     <div class="container">
         <section class="panel panel-default">
             <div class="panel-heading">
@@ -208,16 +149,19 @@
                 <td th:text="${menu.getPrice()}"></td>
                 <td class="col-sm-4 control-label">
                     <input type="number" name="quantity" min="0" value="0"/>
+
                 </td>
             </tr>
             </tbody>
         </table>
+
         <button class="btn btn-primary" type="submit">Add</button>
     </form>
             <button class="btn btn-primary" id="back-button">Go back</button>
         
         </section>
     </div>
+
 </body>
 <script>
     document.getElementById("back-button").addEventListener("click", function() {
