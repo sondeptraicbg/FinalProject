@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>MANAGE RESTAURANT</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+
+    <link rel="stylesheet" th:href="@{/css/chart.css}">
+
     <link rel="stylesheet" href="admin.css">
     <script src="https://kit.fontawesome.com/2b070e02a1.js" crossorigin="anonymous"></script>
 </head>
@@ -47,7 +50,6 @@
 
             <div class="category-right row">
 
-
                 <!-- LIST EMPLOYEE -->
 
 
@@ -79,12 +81,16 @@
                         List order:</h1>
                     <a th:each="order : ${listOrder}" class="content-item"
                        th:href="@{/order/{id}(id=${order.getOrderId()})}">
+
                         <h2 th:text="${order.getCustomer().getCusName()}">THT</h2>
+
                         <span class="title">ID: </span><span th:text="${order.getOrderId()}">1</span>
                         <span class="title">Status: </span><span th:text="${order.getOrderStatus()}">done</span>
                         <br>
                         <span class="title">Order Time: </span><span th:text="${order.getTimeOrder()}">17h</span>
                     </a>
+
+
                 </div>
 
 
@@ -118,6 +124,7 @@
                 </div>
 
 
+
                 <!-- REVENUE -->
 
                 <div class="content row">
@@ -132,11 +139,18 @@
                     </div>
                 </div>
 
-
             </div>
         </div>
     </div>
 </section>
+
+<!-- chart js -->
+<div class="graphBox">
+    <div class="box">
+        <canvas id="myChart1"></canvas>
+    </div>
+</div>
+
 
 <!-- ------------------------------------------------------------------------------------------ -->
 
@@ -151,5 +165,37 @@
 </div>
 
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+<script>
+    // var revenueYear = document.getElementById('myChart').getContext('2d');
+    var revenue = document.getElementById('myChart1').getContext('2d');
+
+    var revenueData = [[${listRevenueMonth}]];
+
+
+    var myChart = new Chart(revenue, {
+        type: 'bar',
+        data: {
+            labels: [[${listMonth}]],
+            datasets: [{
+                label: '',
+                data: revenueData,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+            }]
+        },
+        options: {
+            responsive: true,
+        }
+    });
+
+</script>
 
 </html>

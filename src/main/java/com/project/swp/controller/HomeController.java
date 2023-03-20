@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -233,6 +234,27 @@ public class HomeController {
 
         List<Revenue> listRevenue = adminHomeService.getRevenueByMonth(restaurant.getResID());
         model.addAttribute("listRevenue", listRevenue);
+
+        List<Revenue> Revenue = adminHomeService.getRevenueByRestaurantID(restaurant.getResID());
+        List<Double> listRevenueMonth = new ArrayList<>();
+        List<Integer> listMonth = new ArrayList<>();
+        List<Integer> listYear = new ArrayList<>();
+        double revenueYear = 0.0;
+        for(Revenue revenue : Revenue){
+            listRevenueMonth.add(revenue.getRevenue());
+            listMonth.add(revenue.getMonth());
+            listYear.add(revenue.getYear());
+            if(revenue.getYear() == 2022){
+                revenueYear += revenue.getRevenue();
+            }
+            else if (revenue.getYear() == 2023){
+                revenueYear += revenue.getRevenue();
+            }
+        }
+        model.addAttribute("revenueYear",revenueYear);
+        model.addAttribute("listYear",listYear);
+        model.addAttribute("listMonth",listMonth);
+        model.addAttribute("listRevenueMonth",listRevenueMonth);
         return "admin/restaurant";
     }
 
