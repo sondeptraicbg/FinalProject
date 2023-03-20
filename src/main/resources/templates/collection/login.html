@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link th:href="@{/css/login.css}" type="text/css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/2b070e02a1.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container" style="background-image: url('http://drive.google.com/uc?export=view&id=1OAHx8j-8IjfF_U11HfTKX6n2Y-zT_SSH');">
+  <div class="login-box">
+    <div class="user-icon">
+      <i class="far fa-user"></i>
+    </div>
+
+    <div>
+      <a th:href="@{/login/customer}">
+        Login as customer
+      </a> <br> <br>
+      <a th:href="@{/login/staff}">
+        Login as staff of restaurant
+      </a> <br> <br>
+      <a th:href="@{/login/admin}">
+        Login as a company
+      </a>
+    </div>
+
+    <div class="homepage">
+      <a th:href="@{/home/default}">
+        <i class="fas fa-chevron-left"></i>
+        Back to home
+      </a>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

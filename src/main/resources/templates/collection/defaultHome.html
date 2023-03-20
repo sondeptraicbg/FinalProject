@@ -1,17 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
+    <script src="https://kit.fontawesome.com/2b070e02a1.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-
-    <div>
-        <a href="/login/customer"> login as customer</a> <br> <br>
-        <a href="/login/staff"> login as staff</a> <br> <br>
-        <a href="/login/admin"> login as admin</a> <br> <br>
-        <a href="/register/customer"> register customer</a> <br> <br>
+<header>
+    <div class="logo">
+        <a th:href="@{/home/default}"><img
+                src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E" alt=""></a>
     </div>
+    <div class="menu">
+        <!-- LIST COMPANY -->
+        <form th:action="@{/home/default/search}" method="post">
+            <select name="company" id="company">
+                <option value="">Brands</option>
+                <option th:each="company : ${listCompany}" th:value="${company.getCompanyID()}"
+                        th:text="${company.getCompanyName()}">
+                </option>
+            </select>
+            <select name="city" id="city">
+                <option value="">City</option>
+                <option th:each="city : ${listCity}" th:value="${city}" th:text="${city}">
+                </option>
+            </select>
+            <input type="text" placeholder="Restaurant Name" name="restaurantName" id="restaurantName" value="">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+    <div class="others">
+        <a th:href="@{/home/public}">Login <i class="fa fa-sign-in"></i> </a>
+    </div>
+</header>
+<!-- start body -->
+<section class="category">
+    <div class="container">
+        <div class="row">
+            <div class="category-left">
 
+                <h1>Discovery</h1>
+                <div class="subcontainer">
+                    <ul>
+                        <li><i class="fa fa-spoon">Restaurant</i>
+                            <ul th:each="category : ${listCategoryRes}">
+                                <li><a href="" th:href="@{/home/default/search/{category}(category = ${category})}"
+                                       th:text="${category}"></a></li>
+                            </ul>
+                        </li>
+                        <li><i class="fa fa-location-arrow">City</i>
+                            <ul th:each="city : ${listCity}">
+                                <li><a href="" th:text="${city}"></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+
+            <div class="category-right row">
+
+
+                <h1 style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">Hot Restaurants:</h1>
+
+                <div class="content row">
+                    <a th:href="@{/restaurant/default/{id}(id=${restaurant.getResID()})}" class="content-item"
+                       th:each="restaurant : ${listHotRestaurant}">
+                        <img th:src="@{${restaurant.getPicture()}}" alt="">
+                        <h1 th:text="${restaurant.getResName()}"></h1>
+                        <i class="fa fa-location-arrow"></i>
+                        <span th:text="${restaurant.getCity()}"></span>
+                        <span th:text="${restaurant.getDistrict()}"></span>
+                        <p>Rating: <span th:text="${restaurant.getRatingPoint()}"></span></p>
+                    </a>
+                </div>
+
+                <h1 style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">Best seller:</h1>
+                <div class="content row">
+                    <div class="content-item" th:each="food : ${listHotFood}">
+                        <img th:src="@{${food.getPicture()}}" alt="">
+                        <h1 th:text="${food.getFoodName()}"></h1>
+                        <i class="fa fa-money"></i><span th:text="${food.getPrice()}"></span>
+                        <span th:text="${food.getRestaurant().getResName()}"></span>
+                        <p>Description: <span th:text="${food.getDescriptionFood()}"></span></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- footer -->
+<footer>
+    <li><a href="">Contact</a></li>
+    <li><a href="">We're hiring</a></li>
+    <li><a href="">About us</a></li>
+</footer>
 </body>
+
 </html>

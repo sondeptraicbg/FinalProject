@@ -64,11 +64,7 @@ public class LoginController {
             session.setAttribute("staff", staff);
             Restaurant restaurant = restaurantService.getDetailRes(staff.getRole().getRoleId().getRestaurant().getResID());
             session.setAttribute("restaurant", restaurant);
-            if(staff.getRole().getRoleName().equals("manager")){
                 return ("redirect:/home/manager");
-            }else {
-                return ("redirect:/home/employee");
-            }
         }
 
         model.addAttribute("errorNotice", "Wrong username or password");

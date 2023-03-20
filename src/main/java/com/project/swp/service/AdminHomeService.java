@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminHomeService {
@@ -31,6 +32,6 @@ public class AdminHomeService {
     }
 
     public List<Revenue> getRevenueByRestaurantID(int resID){
-        return revenueRepo.findRevenuesByRestaurant_ResID(resID);
+        return revenueRepo.findRevenuesByRestaurant_ResID(resID).orElse(null);
     }
 }

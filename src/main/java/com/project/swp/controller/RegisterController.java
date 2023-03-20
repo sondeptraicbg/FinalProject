@@ -41,6 +41,7 @@ public class RegisterController {
             model.addAttribute("error", "username already exists");
             return "customer/registercustomer";
         }
+        customerService.createCustomer(customer);
         session.setAttribute("customer", customer);
         return  ("redirect:/home/customer");
     }

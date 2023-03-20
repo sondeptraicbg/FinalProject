@@ -36,11 +36,11 @@
             <div class="category-right row">
                 <div class="content row">
                     <div class="content-item" th:each="listTb: ${listTableCompany}">
-                        <h1 th:text="listTb"></h1>
+                        <h1 th:if="${listTb.get(0) != null}" th:text="${listTb.get(0).getTableId().restaurant.resName}"></h1>
                         <div class="content-item" th:each="tb : ${listTb}">
                             <h1 th:text="${tb.tableId.tableId}"></h1>
                             <select>
-                                <option th:each="res: ${listRes}" th:text="${res.resName}"></option>
+                                <option th:selected="${tb.getTableId().getRestaurant().getResName()==res.getResName()}" th:each="res: ${listRes}" th:text="${res.resName}"></option>
                             </select>
                         </div>
                     </div>

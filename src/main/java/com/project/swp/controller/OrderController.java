@@ -53,7 +53,7 @@ public class OrderController {
     @PostMapping("/new/{id}")
     public String addNewOrder(@PathVariable("id") int id, @ModelAttribute("order") Order order, HttpSession session) {
         Restaurant restaurant = restaurantService.getDetailRes(id);
-        order.setOrderStatus("Wait Pay");
+        order.setOrderStatus("Wait Set");
         order.setRestaurant(restaurant);
         orderService.save(order);
         return "redirect:/home/manager";

@@ -54,6 +54,24 @@ public class RestaurantController {
         return "customer/detailRestaurant";
     }
 
+    @GetMapping("/default/{id}")
+    public String  getDetailRestaurantDefault(@PathVariable Integer id, Model model, HttpSession httpSession) {
+        List<Rate> listRateByResId = rateService.getListRateByResId(id);
+        model.addAttribute("listRate", listRateByResId);
+
+        Restaurant restaurant = restaurantService.getDetailRes(id);
+        model.addAttribute("detail", restaurant);
+        List<Menu> listMenuDetailRes = menuService.getListMenuByResId(id);
+        model.addAttribute("listMenuDetailRes", listMenuDetailRes);
+        List<CategoryMenu> categoryMenus = categoryMenuService.getListCategory();
+        model.addAttribute("listCategoryMenu", categoryMenus);
+
+        Order order = new Order();
+        model.addAttribute("order", order);
+
+        return "collection/restaurant";
+    }
+
 
     @GetMapping("customer/searchMenu/{resId}/{cateId}")
     public String listMenuByCateID(@PathVariable("resId") int resId, @PathVariable("cateId") int cateId, Model model) {
@@ -94,6 +112,7 @@ public class RestaurantController {
 
         order.setCustomer(customer);
         order.setOrderStatus("wait pay");
+        order.setTotal(0.0);
 
         Restaurant restaurant = restaurantService.getDetailRes(id);
         order.setRestaurant(restaurant);
