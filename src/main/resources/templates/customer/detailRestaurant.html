@@ -1,95 +1,210 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Restaurant Detail</title>
-
+    <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/2b070e02a1.js" crossorigin="anonymous"></script>
 </head>
+
+
 <body>
-
-<div>
-    <a th:href="@{/home/customer}">Home</a>
-</div>
-
-<h1>Restaurant Detail</h1>
-<h2 th:text="${detail.getResName()}"></h2>
-<p th:text="${detail.getCategoryRes()}"></p>
-<p th:text="${detail.getCity()}"></p>
-<p th:text="${detail.getDistrict()}"></p>
-
-
-<h3>Category</h3>
-<div>
-    <a th:href="@{/restaurant/customer/{id}(id=${detail.getResID()})}" class="active">All</a>
-    <th:block th:each="cateMenu : ${listCategoryMenu}">
-        <a th:href="@{/restaurant/customer/searchMenu/{resId}/{cateId}(resId=${detail.getResID()}, cateId=${cateMenu.getCateID()})}" th:text="${cateMenu.getCateName()}"></a>
-    </th:block>
-</div>
-
-<h3>Menu</h3>
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="menu : ${listMenuDetailRes}">
-        <td th:text="${menu.getFoodName()}"></td>
-        <td th:text="${menu.getDescriptionFood()}"></td>
-        <td th:text="${menu.getPrice()}"></td>
-    </tr>
-    </tbody>
-</table>
-
-<!--    SEARCh ============================================================================ -->
+<header>
+    <div class="logo">
+        <a th:href="@{/home/customer}"><img
+                src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E" alt=""></a>
+    </div>
+    <div class="menu">
+        <!-- LIST COMPANY -->
+        <form th:action="@{/home/customer/search}" method="post">
+            <select name="company" id="company">
+                <option value="">Brands</option>
+                <option th:each="company : ${listCompany}" th:value="${company.getCompanyID()}"
+                        th:text="${company.getCompanyName()}">
+                </option>
+            </select>
+            <select name="city" id="city">
+                <option value="">City</option>
+                <option th:each="city : ${listCity}" th:value="${city}" th:text="${city}">
+                </option>
+            </select>
+            <input type="text" placeholder="Restaurant Name" name="restaurantName" id="restaurantName" value="">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+    <div class="others">
+        <!--PROFILE-->
+        <a th:href="@{/customer/profile}"><i class="fa fa-user"></i> </a>
+        <!--LOGIN BUTTON-->
+        <!--        <a th:href="@{/login/logout}"><i class="fa fa-sign-in"></i> </a>-->
+        <!--LOGOUT BUTTON-->
+        <a th:href="@{/login/logout}"><i class="fa fa-sign-out"></i> </a>
+    </div>
+</header>
 
 
+<!-- start body -->
+<section class="detail">
+    <div class="detail-container">
+        <div class="row">
+            <div class="detail-left">
+                <div class="detail-left-main-item">
+                    <img th:src="@{${detail.getPicture()}}" alt="">
+                    <h1>
+                        <span class="food-code-star">4.5 <i class="fa fa-star"></i></span>
+                        <span th:text="${detail.getResName()}"></span>
+                    </h1>
 
-<form  th:action="@{/restaurant/customer/searchMenu}" method="post">
-    <input type="hidden" th:name="resID" th:value="${detail.getResID()}" />
+                    <p th:text="${detail.getCity()}"><span th:text="${detail.getDistrict()}"></span></p>
+                    <p>Open time: 10h00 - 22h00</p>
+                    <p><i class="fa fa-tag" th:text="${detail.getCategoryRes()}"></i></p>
+                </div>
 
-    <label for="priceFrom">Price From:</label>
-    <input type="text" id="priceFrom" name="priceFrom"/>
 
-    <label for="priceTo">Price To:</label>
-    <input type="text" id="priceTo" name="priceTo"/>
+                <!--    SEARCh ============================================================================ -->
+                <div class="detail-left-search-item">
+                    <div class="by-cate">
+                        <h1 class="serparater">Category</h1>
+                        <a th:href="@{/restaurant/customer/{id}(id=${detail.getResID()})}" class="active">All</a>
+                        <th:block th:each="cateMenu : ${listCategoryMenu}">
+                            <a th:href="@{/restaurant/customer/searchMenu/{resId}/{cateId}(resId=${detail.getResID()}, cateId=${cateMenu.getCateID()})}"
+                               th:text="${cateMenu.getCateName()}"></a>
+                        </th:block>
+                    </div>
 
-    <button type="submit">Search</button>
-</form>
+                    <div class="by-price">
+                        <h1 class="serparater">Price</h1>
+                        <form th:action="@{/restaurant/customer/searchMenu}" method="post">
+                            <input type="hidden" th:name="resID" th:value="${detail.getResID()}" />
 
-<div>
-    <h1></h1>
-</div>
-<br>
-<br>
-<br>
-<br>
+                            <input type="text" placeholder="From" id="priceFrom" name="priceFrom" />
 
-<!-- BOOK TABLE ============================================================================ -->
+                            <input type="text" placeholder="To" id="priceTo" name="priceTo" />
 
-<form id="formBook"  th:action="@{/restaurant/customer/order/{id}(id=${detail.getResID()})}" method="post" th:object="${order}">
+                            <button type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
 
-    <label for="booking-time">Choose booking time:</label>
-    <input type="datetime-local" id="booking-time" name="booking-time" th:field="*{timeOrder}">
+                <div class="detail-left-content-item">
+                    <h1 class="serparater">Menu</h1>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="menu : ${listMenuDetailRes}">
+                            <td th:text="${menu.getFoodName()}"></td>
+                            <td th:text="${menu.getDescriptionFood()}"></td>
+                            <td th:text="${menu.getPrice()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-    <label for="numberOfPeople">Number of People:</label>
-    <input type="number" id="numberOfPeople" name="numberOfPeople" required th:field="*{numberCustomer}">
 
-    <label for="phoneNumber">Phone Number:</label>
-    <input type="tel" id="phoneNumber" name="phoneNumber" th:field="*{phoneCustomer}">
+                <!--    Rate ============================================================================ -->
 
-    <span>Method payment</span>
-    <select th:field="*{methodPayment}">
-        <option selected value="Visa">Visa</option>
-        <option value="Momo">Momo</option>
-        <option value="Banking" >Banking</option>
-        <option value="Cash">Cash</option>
-    </select>
+                <div class="detail-left-rate-item">
 
-    <button type="submit" id="submit-btn">Submit</button>
-</form>
+
+                    <div class="new-cmt" th:if="${rateBefore == 'rateBefore'}">
+                        <h1
+                                style="width: 70%; margin-bottom: 10px; border-bottom: 2px solid #f26522;">
+                            New comment</h1>
+                        <form
+                              th:action="@{/restaurant/customer/rateRes/{id}(id=${detail.getResID()})}" method="post">
+
+                            <div class="rating">
+                                <input value="5" type="radio" name="star" id="star1"><label for="star1"></label>
+                                <input value="4" type="radio" name="star" id="star2"><label for="star2"></label>
+                                <input value="3" type="radio" name="star" id="star3"><label for="star3"></label>
+                                <input value="2" type="radio" name="star" id="star4"><label for="star4"></label>
+                                <input value="1" type="radio" name="star" id="star5"><label for="star5"></label>
+                            </div>
+
+                            <textarea placeholder="Your message" name="comment" id="" cols="100" rows="5"></textarea>
+
+                            <input style="cursor: pointer" type="submit" value="Send" />
+                        </form>
+                    </div>
+
+
+                    <h1
+                            style="width: 100%; margin-bottom: 10px; border-bottom: 2px solid #f26522; text-align: center;">
+                        Comment</h1>
+                    <div class="cmt-container">
+                        <div class="cmt-item" th:each="rate : ${listRate}">
+                            <h1 class="title" th:text="${rate.getRateId().getCustomer().getCusName()}"><span>:</span></h1>
+                            &ensp;<span th:text="${rate.getComment()}"></span><br>
+                            &ensp;<span>Rate: </span><span th:text="${rate.getRating()}"></span>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+
+
+            <!-- BOOK TABLE ============================================================================ -->
+            <div class="detail-right">
+                <div class="box">
+                    <h1
+                            style="width: 100%; margin-bottom: 10px; border-bottom: 2px solid #f26522; text-align: center;">
+                        Order NOW!</h1>
+
+
+                    <form id="formBook" th:action="@{/restaurant/customer/order/{id}(id=${detail.getResID()})}"
+                          method="post" th:object="${order}">
+                        <label>Booking time:</label>
+                        <input type="datetime-local" id="booking-time" name="booking-time"
+                               th:field="*{timeOrder}"><br>
+
+                        <label>Number of guess:</label>
+                        <input type="number" id="numberOfPeople" name="numberOfPeople" required
+                               th:field="*{numberCustomer}" placeholder="Number of guess"><br>
+
+                        <label>Phone:</label>
+                        <input type="tel" id="phoneNumber" name="phoneNumber" th:field="*{phoneCustomer}"
+                               placeholder="Phone"><br>
+
+                        <label>Payment method</label>
+                        <div class="button-grp">
+                            <select th:field="*{methodPayment}">
+                                <option selected value="Visa">Visa</option>
+                                <option value="Momo">Momo</option>
+                                <option value="Banking">Banking</option>
+                                <option value="Cash">Cash</option>
+                            </select>
+
+                            <button type="submit" id="submit-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- footer -->
+<footer>
+    <li><a href=""><img src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E"
+                        alt=""></a></li>
+    <li><a href="">Contact</a></li>
+    <li><a href="">We're hiring</a></li>
+    <li><a href="">About us</a></li>
+</footer>
+
 </body>
+
 </html>

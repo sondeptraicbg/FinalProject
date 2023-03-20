@@ -29,4 +29,8 @@ public class AdminHomeService {
     public List<Revenue> getRevenueByMonth(int redId){
         return revenueRepo.findByRestaurant_ResID(redId);
     }
+
+    public List<Revenue> getRevenueByRestaurantID(int resID){
+        return revenueRepo.findRevenuesByRestaurant_ResID(resID);
+    }
 }

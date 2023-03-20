@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public interface OrderRepo extends JpaRepository<Order, Integer> {
@@ -16,12 +18,18 @@ public interface OrderRepo extends JpaRepository<Order, Integer> {
 
     Order findByOrderId(int id);
 
-    Order deleteByOrderId(int id);
+    Order deleteByOrderId(int orderId);
 
     List<Order> findByCustomer_CusIDOrderByOrderStatusDesc(int  cusID);
 
     @Query("select max (o.orderId) from Order o")
     int getOrderIdNLastest();
+
+
+    List<Order> findAllByCustomer_CusID(int cusId);
+
+    List<Order> findByTimeOrderBetween(LocalDateTime startTimeOrder,LocalDateTime endTimeOrder);
+
 
 //    @Modifying
 //    @Query("Update Order o set o.table.tableId.restaurant.resID = :resID where o.orderId = :orderID")

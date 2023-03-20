@@ -23,6 +23,10 @@ public class MenuService {
         return  menuRepo.findMenusByRestaurant_ResID(id);
     }
 
+    public List<Menu> getAllListMenu() {
+        return menuRepo.findAll();
+    }
+
     public List<Menu> getListMenusBySearch(CategoryMenu categoryMenu, String foodName, String priceFromRaw, String priceToRaw, Restaurant restaurant){
         Double priceFrom, priceTo;
         if(priceFromRaw.equals(""))

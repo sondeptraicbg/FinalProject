@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,6 +34,8 @@ public class HomeController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private OrderService orderService;
     @Autowired
     private AdminHomeService adminHomeService;
 
@@ -75,6 +79,16 @@ public class HomeController {
     }
 
     // Manager place // =========================================================================================
+
+    @GetMapping("/search/{resID}")
+    public String getOrderByTime(@RequestParam("startTimeOrder")LocalDateTime startTimeOrder,
+                                 @RequestParam("endTimeOrder") LocalDateTime endTimeOrder,
+                                 Model model){
+        List<Order> order = orderService.getOrderByTime(startTimeOrder,endTimeOrder);
+        model.addAttribute("order", order);
+        return "redirect:/home/manager";
+    }
+
     @GetMapping("/manager")
     public String ManagerHome(Model model, HttpSession session) {
         Staff staff = (Staff) session.getAttribute("staff");
@@ -220,6 +234,27 @@ public class HomeController {
 
         List<Revenue> listRevenue = adminHomeService.getRevenueByMonth(restaurant.getResID());
         model.addAttribute("listRevenue", listRevenue);
+
+        List<Revenue> Revenue = adminHomeService.getRevenueByRestaurantID(restaurant.getResID());
+        List<Double> listRevenueMonth = new ArrayList<>();
+        List<Integer> listMonth = new ArrayList<>();
+        List<Integer> listYear = new ArrayList<>();
+        double revenueYear = 0.0;
+        for(Revenue revenue : Revenue){
+            listRevenueMonth.add(revenue.getRevenue());
+            listMonth.add(revenue.getMonth());
+            listYear.add(revenue.getYear());
+            if(revenue.getYear() == 2022){
+                revenueYear += revenue.getRevenue();
+            }
+            else if (revenue.getYear() == 2023){
+                revenueYear += revenue.getRevenue();
+            }
+        }
+        model.addAttribute("revenueYear",revenueYear);
+        model.addAttribute("listYear",listYear);
+        model.addAttribute("listMonth",listMonth);
+        model.addAttribute("listRevenueMonth",listRevenueMonth);
         return "admin/restaurant";
     }
 
