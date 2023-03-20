@@ -124,6 +124,9 @@ section{
 
 .category-left{
     width: 15%;
+    padding: 10px;
+    box-shadow: 0 1px 6px #c1beb9;
+    margin-right: 20px;
 }
 
 .detail{
@@ -136,7 +139,10 @@ section{
 }
 
 .detail-right .box{
-    height: 260px;
+    height: 320px;
+    margin-left: 60px;
+    padding: 10px;
+    box-shadow: 0 1px 6px #c1beb9;
 }
 
 .detail-right .box input{
@@ -159,7 +165,10 @@ section{
 
 .content{
     justify-content: space-between;
+    padding: 10px;
+    box-shadow: 0 1px 6px #c1beb9;
 }
+
 
 .content-item{
     width: calc(33% - 15px);
@@ -208,7 +217,8 @@ a:hover{
 
 .detail-left-main-item{
     text-align: center;
-    padding: 0 0 30px 0;
+    padding: 10px 0 20px 0;
+    box-shadow: 0 1px 6px #c1beb9;
 }
 
 .detail-left-main-item img{
@@ -241,6 +251,8 @@ a:hover{
     display: flex;
     margin: 10px 0 20px;
     height: 180px;
+    box-shadow: 0 1px 6px #c1beb9;
+    padding: 0 10px;
 }
 
 .by-cate .serparater, .by-price .serparater{
@@ -248,8 +260,9 @@ a:hover{
 }
 
 .by-cate{
-    margin-bottom: 56px;
+    margin-bottom: 38px;
     width: 30%;
+    margin-right: 100px;
 }
 
 .by-cate a{
@@ -286,6 +299,8 @@ a:hover{
     justify-content: center;
     align-items: center;
     display: grid;
+    box-shadow: 0 1px 6px #c1beb9;
+    padding: 0 10px;
 }
 
 .detail-left-content-item table{
@@ -408,13 +423,16 @@ footer li ::after{
 }
 
 .detail-left-rate-item{
-    margin-top: 10px;
+    margin-top: 30px;
+    box-shadow: 0 1px 6px #c1beb9;
+    padding: 0 10px;
 }
 
 .title{
     font-size: 20px;
     font-weight: 600;
 }
+
 
 .cmt-container{
     align-items: center;
@@ -423,6 +441,9 @@ footer li ::after{
 .cmt-item{
     margin-top: 20px;
     margin-left: 30px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 9px;
 }
 .cmt-item span{
     font-size: 18px;

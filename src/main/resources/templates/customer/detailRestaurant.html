@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Home Page</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
-    <link rel="stylesheet" href="style.css">
+
     <script src="https://kit.fontawesome.com/2b070e02a1.js" crossorigin="anonymous"></script>
 </head>
 
@@ -57,7 +57,12 @@
                         <span th:text="${detail.getResName()}"></span>
                     </h1>
 
-                    <p th:text="${detail.getCity()}"><span th:text="${detail.getDistrict()}"></span></p>
+
+                    <div style="margin-top: 10px">
+                        <i class="fa fa-location-arrow"></i>
+                        <span th:text="${detail.getCity()} " ></span>
+                        <span th:text="${detail.getDistrict()}"></span>
+                    </div>
                     <p>Open time: 10h00 - 22h00</p>
                     <p><i class="fa fa-tag" th:text="${detail.getCategoryRes()}"></i></p>
                 </div>
@@ -77,11 +82,11 @@
                     <div class="by-price">
                         <h1 class="serparater">Price</h1>
                         <form th:action="@{/restaurant/customer/searchMenu}" method="post">
-                            <input type="hidden" th:name="resID" th:value="${detail.getResID()}" />
+                            <input type="hidden" th:name="resID" th:value="${detail.getResID()}"/>
 
-                            <input type="text" placeholder="From" id="priceFrom" name="priceFrom" />
+                            <input type="text" placeholder="From" id="priceFrom" name="priceFrom"/>
 
-                            <input type="text" placeholder="To" id="priceTo" name="priceTo" />
+                            <input type="text" placeholder="To" id="priceTo" name="priceTo"/>
 
                             <button type="submit">Search</button>
                         </form>
@@ -119,7 +124,7 @@
                                 style="width: 70%; margin-bottom: 10px; border-bottom: 2px solid #f26522;">
                             New comment</h1>
                         <form
-                              th:action="@{/restaurant/customer/rateRes/{id}(id=${detail.getResID()})}" method="post">
+                                th:action="@{/restaurant/customer/rateRes/{id}(id=${detail.getResID()})}" method="post">
 
                             <div class="rating">
                                 <input value="5" type="radio" name="star" id="star1"><label for="star1"></label>
@@ -131,7 +136,7 @@
 
                             <textarea placeholder="Your message" name="comment" id="" cols="100" rows="5"></textarea>
 
-                            <input style="cursor: pointer" type="submit" value="Send" />
+                            <input style="cursor: pointer" type="submit" value="Send"/>
                         </form>
                     </div>
 
@@ -141,13 +146,12 @@
                         Comment</h1>
                     <div class="cmt-container">
                         <div class="cmt-item" th:each="rate : ${listRate}">
-                            <h1 class="title" th:text="${rate.getRateId().getCustomer().getCusName()}"><span>:</span></h1>
+                            <h1 class="title" th:text="${rate.getRateId().getCustomer().getCusName()}"><span>:</span>
+                            </h1>
                             &ensp;<span th:text="${rate.getComment()}"></span><br>
                             &ensp;<span>Rate: </span><span th:text="${rate.getRating()}"></span>
                         </div>
                     </div>
-
-
 
 
                 </div>
@@ -193,7 +197,6 @@
         </div>
     </div>
 </section>
-
 
 
 <!-- footer -->
