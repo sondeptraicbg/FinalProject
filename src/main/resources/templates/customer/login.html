@@ -8,7 +8,6 @@
 </head>
 <body>
 
-
     <div class="container" style="background-image: url('http://drive.google.com/uc?export=view&id=1OAHx8j-8IjfF_U11HfTKX6n2Y-zT_SSH');">
         <div class="login-box">
             <div th:if="${errorNotice}" style="color:red">
@@ -38,7 +37,7 @@
                     <button class="full-btn" type="submit">Login</button>
                 </div>
                 <div class="form-group">
-                    <p>Not Registered? <a href="register.html">Sign Up</a></p>
+                    <p>Not Registered? <a th:href="@{/register/customer}">Sign Up</a></p>
                 </div>
             </form>
 
@@ -46,20 +45,9 @@
                 Or login via social links
             </div>
 
-            <div class="social-login">
-                <a href="facebook">
-                    <i class="fab fa-facebook-square"></i>
-                    Facebook
-                </a>
-
-                <a href="google">
-                    <i class="fab fa-google"></i>
-                    Google
-                </a>
-            </div>
 
             <div class="homepage">
-                <a href="#">
+                <a th:href="@{/home/default}">
                     <i class="fas fa-chevron-left"></i>
                     Back to home
                 </a>
@@ -67,7 +55,6 @@
 
         </div>
     </div>
-
 
 </body>
 </html>

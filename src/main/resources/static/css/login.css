@@ -64,7 +64,7 @@ body {
     width: 100%;
 }
 
-input[type="text"].form-control, input[type="password"].form-control, input[type="number"].form-control{
+input[type="text"].form-control, input[type="password"].form-control, input[type="number"].form-control,input[type="datetime-local"].form-control{
     font-size: 16px;
     outline: none;
     border: none;
@@ -74,6 +74,19 @@ input[type="text"].form-control, input[type="password"].form-control, input[type
     border-radius: 2px;
     transition: all 0.3s ease;
 }
+
+select.form-control{
+    font-size: 16px;
+    outline: none;
+    border: none;
+    width: calc(100% - 36px);
+    border: 2px solid #ccc;
+    padding: 10px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
 
 input[type="text"].form-control:hover, input[type="password"].form-control:hover, input[type="number"].form-control:hover{
     border: 2px solid #f8bbd0;
@@ -118,7 +131,7 @@ button{
     text-transform: uppercase;
     font-size: 16px;
     cursor: pointer;
-    transition: all 0 3s ease;
+    transition: all 0.3s ease;
 }
 
 button:hover{

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +30,16 @@ public class OrderService {
         return orderRepo.deleteByOrderId(id);
     }
 
+    public void delteOrder(Order order) {
+        orderRepo.delete(order);
+    }
+
     public List<Order> getListOrderByCustomer(int  cusID) {
         return orderRepo.findByCustomer_CusIDOrderByOrderStatusDesc(cusID);
+    }
+
+    public List<Order> getListOrderByCusId(int cusId) {
+        return orderRepo.findAllByCustomer_CusID(cusId);
     }
 
 //    @Transactional
@@ -44,6 +53,10 @@ public class OrderService {
     // Get Order by id //
     public Order getOrderById(int id) {
         return orderRepo.findByOrderId(id);
+    }
+
+    public List<Order> getOrderByTime(LocalDateTime startTimeOrder, LocalDateTime endTimeOrder){
+        return orderRepo.findByTimeOrderBetween(startTimeOrder,endTimeOrder);
     }
 
 }

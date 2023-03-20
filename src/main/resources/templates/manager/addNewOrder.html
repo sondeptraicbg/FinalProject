@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Add new order</title>
+  <link rel="stylesheet" th:href="@{/css/addNewOrder.css}">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="main">
+  <h1>Place Your Order Here!</h1>
+  <form id="formBook" th:action="@{/order/new/{id}(id=${detail.getResID()})}"  method="post" th:object="${order}">
+    <fieldset>
+      <legend>Choose booking time:</legend>
+      <input type="datetime-local" id="booking-time" name="booking-time" th:field="*{timeOrder}">
+    </fieldset>
+    <fieldset>
+      <legend>Number of People:</legend>
+      <input type="number" id="numberOfPeople" name="numberOfPeople" required th:field="*{numberCustomer}">
+    </fieldset>
+    <fieldset>
+      <legend> Phone Number:</legend>
+      <input type="tel" id="phoneNumber" name="phoneNumber" th:field="*{phoneCustomer}">
+    </fieldset>
+    <fieldset>
+      <legend>Method Payment:</legend>
+      <div class="col-sm-3">
+      <select  class="form-control" th:field="*{methodPayment}">
+        <option selected value="Visa">Visa</option>
+        <option value="Momo">Momo</option>
+        <option value="Banking">Banking</option>
+        <option value="Cash">Cash</option>
+      </select>
+      </div>
+    </fieldset>
+    <input class="button" id="submit-btn" type="submit" value="Submit!">
+  </form>
+</div>
+</body>
+</html>

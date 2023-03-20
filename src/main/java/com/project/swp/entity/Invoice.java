@@ -26,7 +26,7 @@ public class Invoice {
     private float discount;
 
     @Column(name = "ActualTotal")
-    private int actualTotal;
+    private float actualTotal;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "EmpID", referencedColumnName = "EmpID")

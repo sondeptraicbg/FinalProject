@@ -1,63 +1,171 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" >
 
 <head>
     <meta charset="UTF-8">
     <title>Update Order</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <style>
+        .container{
+            background-image: linear-gradient(to bottom right, bisque,#f3f3f3);
+        }
+        .panel-title{
+            margin-bottom: 20px;
+            margin-top: 20px;
+            margin-left: 13px;
+            font-size: 30px;
+
+        }
+        .btn{
+            font-size: 15px;
+            padding: 10px 20px;
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
-
 <body>
+<!--    <form method="post" th:action="@{/order/update}" th:object="${order}">-->
+
+<!--        <input type="text" readonly th:field="*{orderId}" th:value="${order.orderId}"/>-->
+
+    <div class="container">
+        <section class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Update Order</h3>
+            </div>
+            <div class="panel-body">
+                <form id="formBook" method="post" th:action="@{/order/update}" th:object="${order}">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Order ID</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text" readonly th:field="*{orderId}" th:value="${order.orderId}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Time of Order</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="datetime-local" th:field="*{timeOrder}" th:value="${order.getTimeOrder()}"/>
+                        </div>
+                    </div>
+
+                    <!-- Total // -->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Total</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" readonly type="text" th:field="*{total}"/>
+                        </div>
+                    </div>
+
+                    <!--Employee-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Price</label>
+                        <div class="col-sm-5">
+                            <input class="form-control" readonly type="text" th:if="${order.staff != null}" th:value="${order.staff.empId}"/>
+                        </div>
+                    </div>
+
+                    <!--Table-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Table</label>
+                        <div class="col-sm-5">
+                            <div th:each="tb : ${tableqs}">
+                                <input  type="checkbox" th:disabled="${order.getOrderStatus() != 'Wait Set'}" th:checked="${order.getStringTable() != null and !order.getStringTable().isEmpty() and order.getStringTable().contains(tb.getTableId().getTableId())}"
+                                        name="tb" th:value="${tb.getTableId().getTableId()}" th:text="${tb.getTableId().getTableId()}">
+                                <input  type="hidden" th:if="${order.getOrderStatus() != 'Wait Set' and order.getStringTable() != null and !order.getStringTable().isEmpty() and order.getStringTable().contains(tb.getTableId().getTableId())}"
+                                        name="tb"  th:value="${tb.getTableId().getTableId()}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Status-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Status</label>
+                        <div class="col-sm-5">
+                            <input type="radio" name="pay" th:field="*{orderStatus}" value="Wait Set">Wait Set
+                            <input type="radio" name="pay" th:field="*{orderStatus}" value="Wait Pay">Wait Pay
+                            <input type="radio" name="pay" th:field="*{orderStatus}" value="Done">Done
+                        </div>
+                    </div>
 
 
-    <button id="back-button">Go back</button>
+                    <!-- Category Menu // -->
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">Method payment</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" th:field="*{methodPayment}">
+                                <option  th:checked="${order.methodPayment=='Apple'}" value="Apple">Apple</option>
+                                <option th:checked="${order.getMethodPayment()=='Momo'}" value="Momo">Momo</option>
+                                <option th:checked="${order.getMethodPayment()=='Banking'}" value="Banking" >Banking</option>
+                                <option th:checked="${order.getMethodPayment()=='Cash'}" value="Cash">Cash</option>
+                            </select>
 
-    <script>
-        document.getElementById("back-button").addEventListener("click", function() {
-            window.history.back();
-        });
-    </script>
+                        </div>
+                    </div>
 
-    <form method="post" th:action="@{/order/update}" th:object="${order}">
+                    <!--Order Detail-->
+                    <span>Order Detail</span>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">Food Name</th>
+                            <th scope="col">Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="invoice: ${listInvoice}">
+                            <td th:text="${invoice.getInvoiceID().getMenu().getFoodName()}"></td>
+                            <td>
+                                <input type="number" readonly name="quantity" min="0" th:value="${invoice.getActualQuantity()}"/>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <input type="submit" class="btn btn-primary" value="Save"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
-        <input type="text" readonly th:field="*{orderId}" th:value="${order.orderId}"/>
 
-        <span>Method payment</span>
-        <select th:field="*{methodPayment}">
-            <option selected th:text="${order.methodPayment}" value="apple"></option>
-            <option value="Momo">Momo</option>
-            <option value="Banking" >Banking</option>
-            <option value="Cash">Cash</option>
-        </select>
-        <br>
 
-        <span>Time of Order</span>
-        <input type="datetime-local" th:field="*{timeOrder}" th:value="${order.timeOrder}"/>
-        <br>
+    <form th:action="@{/order/addMenu/{orderId}(orderId=${order.getOrderId()})}" th:object="${order}" method="post">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">Food Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="menu : ${listMenu}">
+                <td th:text="${menu.getFoodName()}"></td>
+                <td th:text="${menu.getPrice()}"></td>
+                <td class="col-sm-4 control-label">
+                    <input type="number" name="quantity" min="0" value="0"/>
 
-        <span>Total</span>
-        <input readonly type="text" th:field="*{total}"/>
-        <br>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-        <span>Employee</span>
-        <input type="text" th:if="${order.staff != null}" th:value="${order.staff.empId}" readonly/>
-        <br>
-
-        <span>Table</span>
-<!--        <select name="">-->
-<!--            <option th:each="tb : ${tableqs}" th:attr="data-table='${#strings.escapeJson(#json.toJson(tb))}'" th:text="${tb.getTableId().getTableId()}"></option>-->
-<!--        </select>-->
-
-        <div>
-            <input th:each="tb : ${tableqs}" type="checkbox" name="tb", th:value="${tb.getTableId().getTableId()}" th:text="${tb.getTableId().getTableId()}">
-        </div>
-
-        <span>Pay</span>
-        <input type="radio" name="pay" th:field="*{orderStatus}" value="wait pay">Wait pay
-        <input type="radio" name="pay" th:field="*{orderStatus}" value="done">Done
-
-        <input type="submit" value="Save">
+        <button class="btn btn-primary" type="submit">Add</button>
     </form>
+            <button class="btn btn-primary" id="back-button">Go back</button>
+        
+        </section>
+    </div>
 
 </body>
-
+<script>
+    document.getElementById("back-button").addEventListener("click", function() {
+        window.history.back();
+    });
+</script>
 </html>
