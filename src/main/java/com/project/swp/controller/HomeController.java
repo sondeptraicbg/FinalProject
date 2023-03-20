@@ -133,11 +133,11 @@ public class HomeController {
         return "redirect:/home/manager";
     }
     // delete staff by id
-    @GetMapping("/menu/delete/{id}")
-    public String deleteStaffByID(@PathVariable("id") int empID) throws Exception {
-        staffService.deleteStaffById(empID);
-        return "redirect:/home/manager";
-    }
+//    @GetMapping("/menu/delete/{id}")
+//    public String deleteStaffByID(@PathVariable("id") int empID) throws Exception {
+//        staffService.deleteStaffById(empID);
+//        return "redirect:/home/manager";
+//    }
 
     // Add new food
     @GetMapping("/new/{id}")
