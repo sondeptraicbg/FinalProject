@@ -27,7 +27,6 @@
     </div>
     <div class="others">
         <!--PROFILE-->
-        <a th:href="@{/customer/profile}"><i class="fa fa-user"></i> </a>
         <!--LOGIN BUTTON-->
         <!--        <a th:href="@{/login/logout}"><i class="fa fa-sign-in"></i> </a>-->
         <!--LOGOUT BUTTON-->
@@ -51,17 +50,18 @@
 
                 <!-- LIST EMPLOYEE -->
 
-                <h1
-                        style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">
-                    List Employee: <a style="margin-left: 10px;
-    border-radius:5px;
-    padding: 10px;
-    width: 90px;
-    text-align: center; background-color: #f26522; margin-bottom: 10px" th:href="@{/admin/addstaff/{id}(id=${restaurant.getResID()})}">Add employee</a></h1>
 
 
 
                 <div class="content row">
+                    <h1
+                            style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">
+                        List Employee: <a style="    margin-left: 10px;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #f26522;
+    position: relative;
+    top: -5px;" th:href="@{/admin/addstaff/{id}(id=${restaurant.getResID()})}">Add employee</a></h1>
                     <a th:each="employee : ${listEmployee}" class="content-item"
                        th:href="@{/home/manager/em/{id}(id=${employee.getEmpId()})}">
                         <!--                        <img src="images/icons/page-logo.png" alt="">-->
@@ -72,10 +72,11 @@
 
 
                 <!-- LIST ORDER -->
-                <h1
-                        style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">
-                    List order:</h1>
+
                 <div class="content row">
+                    <h1
+                            style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">
+                        List order:</h1>
                     <a th:each="order : ${listOrder}" class="content-item"
                        th:href="@{/order/{id}(id=${order.getOrderId()})}">
                         <h2 th:text="${order.getCustomer().getCusName()}">THT</h2>
@@ -88,10 +89,11 @@
 
 
                 <!-- LIST RATE -->
-                <h1
-                        style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">
-                    List rate (comment):</h1>
+
                 <div class="content row">
+                    <h1
+                            style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">
+                        List rate (comment):</h1>
                     <div class="content-item" th:each="rate : ${listRate}">
                         <h1 th:text="${rate.getRateId().getCustomer().getCusName()}">THT</h1>
                         <span class="title">Comment: </span><span th:text="${rate.getComment()}">Ngon</span>
@@ -102,10 +104,11 @@
 
 
                 <!-- LIST MENU -->
-                <h1
-                        style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">
-                    List food(menu):</h1>
+
                 <div class="content row">
+                    <h1
+                            style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">
+                        List food(menu):</h1>
                     <div class="content-item" th:each="menu : ${listMenu}">
                         <img th:src="@{${menu.getPicture()}}" alt="">
                         <h1 th:text="${menu.getCategoryMenu().getCateName()}">BANH</h1>
@@ -116,10 +119,11 @@
 
 
                 <!-- REVENUE -->
-                <h1
-                        style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">
-                    Revenue</h1>
+
                 <div class="content row">
+                    <h1
+                            style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">
+                        Revenue</h1>
                     <div class="content-item" th:each="revenue : ${listRevenue}">
                         <span class="title">Month: </span> <span th:text="${revenue.getMonth()}">2</span>
                         <span class="title">Year: </span> <span th:text="${revenue.getYear()}">2222</span>

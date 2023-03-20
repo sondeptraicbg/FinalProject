@@ -53,19 +53,19 @@
                 <div class="box">
                     <h1>Discovery</h1>
                     <div class="subcontainer">
-                        <ul>
-                            <li><i class="fa fa-spoon">Restaurant</i>
-                                <ul th:each="category : ${listCategoryRes}">
-                                    <li><a href="" th:href="@{/home/customer/search/{category}(category = ${category})}"
-                                           th:text="${category}"></a></li>
-                                </ul>
-                            </li>
-                            <li><i class="fa fa-location-arrow">City</i>
-                                <ul th:each="city : ${listCity}">
-                                    <li><a href="" th:text="${city}"></a></li>
-                                </ul>
-                            </li>
-                        </ul>
+<!--                        <ul>-->
+<!--                            <li><i class="fa fa-spoon">Restaurant</i>-->
+<!--                                <ul th:each="category : ${listCategoryRes}">-->
+<!--                                    <li><a href="" th:href="@{/home/customer/search/{category}(category = ${category})}"-->
+<!--                                           th:text="${category}"></a></li>-->
+<!--                                </ul>-->
+<!--                            </li>-->
+<!--                            <li><i class="fa fa-location-arrow">City</i>-->
+<!--                                <ul th:each="city : ${listCity}">-->
+<!--                                    <li><a href="" th:text="${city}"></a></li>-->
+<!--                                </ul>-->
+<!--                            </li>-->
+<!--                        </ul>-->
                     </div>
                 </div>
             </div>
