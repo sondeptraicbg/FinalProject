@@ -13,12 +13,12 @@
 <body>
 <header>
     <div class="logo">
-        <a th:href="@{/home/customer}"><img
+        <a th:href="@{/home/default}"><img
                 src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E" alt=""></a>
     </div>
     <div class="menu">
         <!-- LIST COMPANY -->
-        <form th:action="@{/home/customer/search}" method="post">
+        <form th:action="@{/home/default/search}" method="post">
             <select name="company" id="company">
                 <option value="">Brands</option>
                 <option th:each="company : ${listCompany}" th:value="${company.getCompanyID()}"
@@ -35,13 +35,16 @@
         </form>
     </div>
     <div class="others">
-        <!--PROFILE-->
-        <a th:href="@{/customer/profile}"><i class="fa fa-user"></i> </a>
-        <!--LOGIN BUTTON-->
-        <!--        <a th:href="@{/login/logout}"><i class="fa fa-sign-in"></i> </a>-->
-        <!--LOGOUT BUTTON-->
-        <a th:href="@{/login/logout}"><i class="fa fa-sign-out"></i> </a>
+        <a th:href="@{/home/public}">Login <i class="fa fa-sign-in"></i> </a>
     </div>
+<!--    <div class="others">-->
+<!--        &lt;!&ndash;PROFILE&ndash;&gt;-->
+<!--        <a th:href="@{/customer/profile}"><i class="fa fa-user"></i> </a>-->
+<!--        &lt;!&ndash;LOGIN BUTTON&ndash;&gt;-->
+<!--        &lt;!&ndash;        <a th:href="@{/login/logout}"><i class="fa fa-sign-in"></i> </a>&ndash;&gt;-->
+<!--        &lt;!&ndash;LOGOUT BUTTON&ndash;&gt;-->
+<!--        <a th:href="@{/login/logout}"><i class="fa fa-sign-out"></i> </a>-->
+<!--    </div>-->
 </header>
 
 
@@ -72,7 +75,7 @@
                 <div class="detail-left-search-item">
                     <div class="by-cate">
                         <h1 class="serparater">Category</h1>
-                        <a th:href="@{/restaurant/customer/{id}(id=${detail.getResID()})}" class="active">All</a>
+                        <a th:href="@{/restaurant/default/{id}(id=${detail.getResID()})}" class="active">All</a>
                         <th:block th:each="cateMenu : ${listCategoryMenu}">
                             <a th:href="@{/restaurant/customer/searchMenu/{resId}/{cateId}(resId=${detail.getResID()}, cateId=${cateMenu.getCateID()})}"
                                th:text="${cateMenu.getCateName()}"></a>
@@ -81,15 +84,15 @@
 
                     <div class="by-price">
                         <h1 class="serparater">Price</h1>
-                        <form th:action="@{/restaurant/customer/searchMenu}" method="post">
-                            <input type="hidden" th:name="resID" th:value="${detail.getResID()}"/>
+<!--                        <form th:action="@{/restaurant/customer/searchMenu}" method="post">-->
+<!--                            <input type="hidden" th:name="resID" th:value="${detail.getResID()}"/>-->
 
-                            <input type="text" placeholder="From" id="priceFrom" name="priceFrom"/>
+<!--                            <input type="text" placeholder="From" id="priceFrom" name="priceFrom"/>-->
 
-                            <input type="text" placeholder="To" id="priceTo" name="priceTo"/>
+<!--                            <input type="text" placeholder="To" id="priceTo" name="priceTo"/>-->
 
-                            <button type="submit">Search</button>
-                        </form>
+<!--                            <button type="submit">Search</button>-->
+<!--                        </form>-->
                     </div>
                 </div>
 
@@ -163,35 +166,35 @@
                 <div class="box">
                     <h1
                             style="width: 100%; margin-bottom: 10px; border-bottom: 2px solid #f26522; text-align: center;">
-                        Order NOW!</h1>
+                        Login to order</h1>
 
 
-                    <form id="formBook" th:action="@{/restaurant/customer/order/{id}(id=${detail.getResID()})}"
-                          method="post" th:object="${order}">
-                        <label>Booking time:</label>
-                        <input type="datetime-local" id="booking-time" name="booking-time"
-                               th:field="*{timeOrder}"><br>
+<!--                    <form id="formBook" th:action="@{/restaurant/customer/order/{id}(id=${detail.getResID()})}"-->
+<!--                          method="post" th:object="${order}">-->
+<!--                        <label>Booking time:</label>-->
+<!--                        <input type="datetime-local" id="booking-time" name="booking-time"-->
+<!--                               th:field="*{timeOrder}"><br>-->
 
-                        <label>Number of guess:</label>
-                        <input type="number" id="numberOfPeople" name="numberOfPeople" required
-                               th:field="*{numberCustomer}" placeholder="Number of guess"><br>
+<!--                        <label>Number of guess:</label>-->
+<!--                        <input type="number" id="numberOfPeople" name="numberOfPeople" required-->
+<!--                               th:field="*{numberCustomer}" placeholder="Number of guess"><br>-->
 
-                        <label>Phone:</label>
-                        <input type="tel" id="phoneNumber" name="phoneNumber" th:field="*{phoneCustomer}"
-                               placeholder="Phone"><br>
+<!--                        <label>Phone:</label>-->
+<!--                        <input type="tel" id="phoneNumber" name="phoneNumber" th:field="*{phoneCustomer}"-->
+<!--                               placeholder="Phone"><br>-->
 
-                        <label>Payment method</label>
-                        <div class="button-grp">
-                            <select th:field="*{methodPayment}">
-                                <option selected value="Visa">Visa</option>
-                                <option value="Momo">Momo</option>
-                                <option value="Banking">Banking</option>
-                                <option value="Cash">Cash</option>
-                            </select>
+<!--                        <label>Payment method</label>-->
+<!--                        <div class="button-grp">-->
+<!--                            <select th:field="*{methodPayment}">-->
+<!--                                <option selected value="Visa">Visa</option>-->
+<!--                                <option value="Momo">Momo</option>-->
+<!--                                <option value="Banking">Banking</option>-->
+<!--                                <option value="Cash">Cash</option>-->
+<!--                            </select>-->
 
-                            <button type="submit" onclick="alert('order successfully, my staff will response in few minutes')" id="submit-btn">Submit</button>
-                        </div>
-                    </form>
+<!--                            <button type="submit" id="submit-btn">Submit</button>-->
+<!--                        </div>-->
+<!--                    </form>-->
                 </div>
             </div>
         </div>

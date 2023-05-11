@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Order Detail</title>
+  <link th:href="@{/css/login.css}" type="text/css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/2b070e02a1.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<div class="container"
+     style="background-image: url('http://drive.google.com/uc?export=view&id=1OAHx8j-8IjfF_U11HfTKX6n2Y-zT_SSH');">
+  <div class="login-box">
+    <form class="login" th:action="@{/order/customer/edit}" th:object="${order}" method="post">
+      <input type="hidden" th:field="*{orderId}" th:value="${order.getOrderId()}">
+      <input type="hidden" th:field="*{customer}" th:value="${order.getCustomer()}">
+      <input type="hidden" th:field="*{orderStatus}" th:value="${order.getOrderStatus()}">
+
+      <span>Method payment</span>
+      <div class="form-group">
+        <select class="form-control" th:field="*{methodPayment}">
+          <option th:checked="${order.methodPayment=='Apple'}" value="Apple">Apple</option>
+          <option th:checked="${order.getMethodPayment()=='Momo'}" value="Momo">Momo</option>
+          <option th:checked="${order.getMethodPayment()=='Banking'}" value="Banking">Banking</option>
+          <option th:checked="${order.getMethodPayment()=='Cash'}" value="Cash">Cash</option>
+
+        </select>
+      </div>
+      <br>
+
+      <span>Time of Order</span>
+      <div class="form-group">
+        <input class="form-control" type="datetime-local" th:field="*{timeOrder}"
+               th:value="${order.getTimeOrder()}" />
+      </div>
+      <br>
+
+      <span>Number of people</span>
+      <div class="form-group">
+        <input class="form-control" type="text" th:value="${order.getNumberCustomer()}"
+               th:field="*{numberCustomer}" />
+      </div>
+      <br>
+
+      <span>Phone number</span>
+      <div class="form-group">
+        <input class="form-control" type="text" th:value="${order.getPhoneCustomer()}"
+               th:field="*{phoneCustomer}" />
+      </div>
+      <br>
+      <div class="form-group">
+        <button class="form-control" th:if="${order.getOrderStatus().equalsIgnoreCase('Wait Set')}"
+                type="submit">Edit</button>
+      </div>
+    </form>
+    <div class="social-login">
+      <a th:if="${order.getOrderStatus().equalsIgnoreCase('Wait Set')}" onclick="myFunction()"
+         th:href="@{/order/customer/delete/{id}(id=${order.getOrderId()})}" >Delete</a>
+
+      <a th:if="${order.getOrderStatus().equalsIgnoreCase('Wait Pay')}"
+         th:href="@{/order/customer/pay/{id}(id=${order.getOrderId()})}">Pay</a>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function myFunction() {
+    confirm("You are about to cancel ordering!");
+  }
+</script>
+
+
+</body>
+
+</html>

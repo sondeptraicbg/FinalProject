@@ -35,4 +35,6 @@ public class Company {
     @Column(name = "Status", length = 30)
     private String status;
 
+    @Column(name = "BussinessLicense", length = Integer.MAX_VALUE)
+    private String bussinessLicense;
 }

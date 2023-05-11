@@ -2,19 +2,60 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Manage Table</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+    <script src="https://kit.fontawesome.com/2b070e02a1.js" crossorigin="anonymous"></script>
 </head>
 <body>
+<header>
+    <div class="logo">
+        <a th:href="@{/home/admin}"><img
+                src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E" alt=""></a>
+    </div>
+    <div class="menu">
+        <!-- LIST COMPANY -->
+        <a th:href="@{/admin/addbranch}">Add new brand</a>
+        <a th:href="@{/admin/table}">Add new table</a>
+    </div>
+    <div class="others">
+        <!--PROFILE-->
+        <!--LOGIN BUTTON-->
+        <!--        <a th:href="@{/login/logout}"><i class="fa fa-sign-in"></i> </a>-->
+        <!--LOGOUT BUTTON-->
+        <a th:href="@{/login/logout}"><i class="fa fa-sign-out"></i> </a>
+        <!--ABOUT US-->
+        <!--        <a th:href=""><i class="fa fa-question"></i> </a>-->
+    </div>
+</header>
 
-    <div th:each="listTb: ${listTableCompany}">
-        <h1 th:text="listTb"></h1>
-        <div th:each="tb : ${listTb}">
-            <h1 th:text="${tb.tableId.tableId}"></h1>
-            <select>
-                <option th:each="res: ${listRes}" th:text="${res.resName}"></option>
-            </select>
+<!-- start body -->
+<section class="category">
+    <div class="container">
+        <div class="row">
+
+            <div class="category-right row">
+                <div class="content row">
+                    <div class="content-item" th:each="listTb: ${listTableCompany}">
+                        <h1 th:if="${listTb.get(0) != null}" th:text="${listTb.get(0).getTableId().restaurant.resName}"></h1>
+                        <div class="content-item" th:each="tb : ${listTb}">
+                            <h1 th:text="${tb.tableId.tableId}"></h1>
+                            <select>
+                                <option th:selected="${tb.getTableId().getRestaurant().getResName()==res.getResName()}" th:each="res: ${listRes}" th:text="${res.resName}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</section>
 
+<!-- footer -->
+<div class="footer">
+    <li><a href=""><img src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E" alt=""></a></li>
+    <li><a href="">Contact</a></li>
+    <li><a href="">We're hiring</a></li>
+    <li><a href="">About us</a></li>
+</div>
 </body>
 </html>

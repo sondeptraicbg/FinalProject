@@ -2,33 +2,62 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>ADMIN HOME</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+    <script src="https://kit.fontawesome.com/2b070e02a1.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Restaurants:</h1>
-    <div style="border: 2px solid; margin-bottom: 20px" th:each="restaurant : ${listRes}">
 
-        <a th:href="@{/home/admin/restaurant/{id}(id=${restaurant.getResID()})}">
-            <div>
-                <h3 th:text="${restaurant.getResName()}"></h3>
-                <h3 th:text="${restaurant.getDistrict()}"></h3>
-                <h3 th:text="${restaurant.getCity()}"></h3>
-                <h3 th:text="${restaurant.getRatingPoint()}"></h3>
+<header>
+    <div class="logo">
+        <a th:href="@{/home/admin}"><img
+                src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E" alt=""></a>
+    </div>
+    <div class="menu">
+        <!-- LIST COMPANY -->
+        <a th:href="@{/admin/addbranch}">Add new restaurant</a>
+        <a th:href="@{/admin/table}">Manage Table</a>
+    </div>
+    <div class="others">
+        <!--PROFILE-->
+        <!--LOGIN BUTTON-->
+        <!--        <a th:href="@{/login/logout}"><i class="fa fa-sign-in"></i> </a>-->
+        <!--LOGOUT BUTTON-->
+        <a th:href="@{/login/logout}"><i class="fa fa-sign-out"></i> </a>
+        <!--ABOUT US-->
+        <!--        <a th:href=""><i class="fa fa-question"></i> </a>-->
+    </div>
+</header>
+
+<!-- start body -->
+<section class="category">
+    <div class="container">
+        <div class="row">
+
+            <div class="category-right row">
+                <div class="content row">
+                    <a class="content-item" th:each="restaurant : ${listRes}"
+                       th:href="@{/home/admin/restaurant/{id}(id=${restaurant.getResID()})}">
+                        <img th:src="@{${restaurant.getPicture()}}" alt="">
+                        <h1 th:text="${restaurant.getResName()}"></h1>
+                        <i class="fa fa-location-arrow"></i>
+                        <span th:text="${restaurant.getCity()}"></span>
+                        <span th:text="${restaurant.getDistrict()}"></span>
+                        <p>Rating: <span th:text="${restaurant.getRatingPoint()}"></span></p>
+                    </a>
+                </div>
             </div>
-        </a>
-
+        </div>
     </div>
+</section>
 
-    <div>
-        <a th:href="@{/admin/addbranch}">
-            add new branch
-        </a>
-    </div>
+<!-- footer -->
+<div class="footer">
+    <li><a href=""><img src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E" alt=""></a></li>
+    <li><a href="">Contact</a></li>
+    <li><a href="">We're hiring</a></li>
+    <li><a href="">About us</a></li>
+</div>
 
-    <div>
-        <a th:href="@{/admin/table}">
-            add new branch
-        </a>
-    </div>
 </body>
 </html>

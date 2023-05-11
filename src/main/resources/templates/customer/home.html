@@ -1,279 +1,113 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
+    <script src="https://kit.fontawesome.com/2b070e02a1.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-<!-- banner bg main start -->
-<div class="banner_bg_main">
-
-    <!-- Chỗ này sẽ hiển thị category Res -->
-    <!-- header top section start -->
-    <div class="container">
-        <div class="header_section_top">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="custom_menu">
-                        <ul>
-                            <li th:each="category : ${listCategoryRes}">
-                                <a th:href="@{/home/customer/search/{category}(category = ${category})}"
-                                   th:text="${category}"></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+<header>
+    <div class="logo">
+        <a th:href="@{/home/customer}"><img
+                src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E" alt=""></a>
     </div>
-    <!-- header top section end -->
-
-
-    <!-- logo section start -->
-    <div class="logo_section">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="logo"><a href="homepage.html"><img style="width: 15%;" src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- logo section end -->
-    <!-- header section start -->
-    <div class="header_section">
-        <div class="container">
-            <div class="containt_main">
-
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Địa điểm
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Hà Nội</a>
-                        <a class="dropdown-item" href="#">Hà Nội</a>
-                        <a class="dropdown-item" href="#">Hà Nội</a>
-                    </div>
-                </div>
-
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Nhà hàng
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">5 sao</a>
-                        <a class="dropdown-item" href="#">5 sao</a>
-                        <a class="dropdown-item" href="#">5 sao</a>
-                    </div>
-                </div>
-
-                <div class="main">
-                    <!-- Another variation with a button -->
-                    <form class="input-group">
-                        <input type="text" class="form-control" placeholder="Search this blog">
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary" type="submit"
-                                    style="background-color: #f26522; border-color:#f26522 ">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="header_box">
-                    <div class="login_menu">
-                        <ul>
-                            <!-- PROFILE -->
-                            <li>
-                                <a th:href="@{/customer/profile}" th:text="${session.customer.getCusName()}">
-                                    <i class="fa fa-user" aria-hidden="true" style="color: #262626; font-size: x-large;"></i>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a th:href="@{/login/logout}">
-                                    <i class="fa fa-sign-in" aria-hidden="true"
-                                       style="color: #262626; font-size: x-large;"></i>
-                                    <i class="fa fa-sign-out" aria-hidden="true"
-                                       style="color: #262626; font-size: x-large;"></i>
-                                </a>
-                            </li>
-                            <!-- <li><a href="#">
-                                  <i class="fa fa-sign-out" aria-hidden="true"
-                                     style="color: #262626; font-size: x-large;"></i>
-                            </li> -->
-
-                            <!-- Chưa có about us! -->
-                            <li><a href="#">
-                                <i class="fa fa-question" aria-hidden="true"
-                                   style="color: #262626; font-size: x-large;"></i>
-                                </a>
-                            </li>
-
-                            <!-- Bấm vào đây để quản lý -->
-                            <!-- <li><a href="#">
-                               <i class="fa fa-gear" aria-hidden="true"
-                                  style="color: #262626; font-size: x-large;"></i>
-                            </li> -->
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- header section end -->
-    <!-- banner section start -->
-    <div class="banner_section layout_padding">
-        <div class="container">
-            <div id="my_slider" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h1 class="banner_taital" style="color: #262626;">Get Start <br>Your favriot</h1>
-                                <div class="buynow_bt"><a href="#">Buy Now</a></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- banner section end -->
-</div>
-<!-- banner bg main end -->
-
-<!-- project section1 start -->
-<div class="project_section">
-    <div id="main_slider" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="container">
-                    <h1 class="project_taital" style="margin-top: 30px;">Top restaurant</h1>
-
-                    <!-- More button -->
-                    <div class="seemore_bt">
-                        <a href="">Xem thêm<i class="fa fa-arrow-circle-o-up" style="margin: 15px;"></i></a>
-                    </div>
-
-                    <div class="project_section_2">
-                        <div class="row" th:each="restaurant : ${listHotRestaurant}">
-
-                            <!-- start foreach -->
-                            <div class="col-lg-3 col-sm-3">
-                                <a class="box_main" th:href="@{/restaurant/customer/{id}(id=${restaurant.getResID()})}">
-                                    <div class="tshirt_img"><img src="images/doan.jpg"></div>
-                                    <div class="shirt_text" th:text="${restaurant.getResName()}"></div>
-                                    <p class="price_text">
-                                 <span style="color: #262626;" th:text="${restaurant.getCity()}">
-                                 </span>
-                                    </p>
-                                    <div class="btn_main">
-                                        <div class="seemore_bt"><a href="#" class="fa fa-tags"
-                                                                   th:text="${restaurant.getCategoryRes()}"></a></div>
-                                    </div>
-                                </a>
-                            </div>
-                            <!-- end foreach -->
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- project section end -->
-
-<!-- project section2 start -->
-<div class="project_section">
-    <div class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="container">
-                    <h1 class="project_taital" style="margin-top: 30px;">Best Sale Food</h1>
-
-                    <!-- More button -->
-                    <div class="seemore_bt">
-                        <a href="">Xem thêm<i class="fa fa-arrow-circle-o-up" style="margin: 15px;"></i></a>
-                    </div>
-
-                    <div class="project_section_2">
-                        <div class="row" th:each="food : ${listHotFood}">
-
-                            <!-- start foreach -->
-                            <div class="col-lg-3 col-sm-3">
-                                <a class="box_main" th:href="@{/restaurant/customer/{id}(id=${food.getResID()})}">
-                                    <div class="tshirt_img"><img src="images/doan.jpg"></div>
-                                    <div class="shirt_text" th:text="${food.getFoodName()}">Banh</div>
-                                    <p class="price_text">
-                                 <span style="color: #262626;" th:text="${food.getPrice()}">10000
-                                 </span>
-                                    </p>
-                                    <p class="price_text">
-                                 <span style="color: #262626;" th:text="${food.getRestaurant().getResName()}">Nha hang
-                                 </span>
-                                    </p>
-                                    <p class="price_text">
-                                 <span style="color: #262626;" th:text="${food.getDescriptionFood()}">Ngon vk
-                                 </span>
-                                    </p>
-                                </a>
-                            </div>
-                            <!-- end foreach -->
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- project section end -->
-
-
-
-<!-- footer section start -->
-<div class="footer_section layout_padding">
-    <div class="container">
-        <div class="footer_logo"><a href="homepage.html"><img style="width: 15%;" src="images/page-logo.png"></a></div>
-
-        <form class="input_bt">
-            <input type="text" class="mail_bt" placeholder="Feedback" name="feedback">
-            <span class="subscribe_bt" id="basic-addon2"><a href="#">Gửi</a></span>
+    <div class="menu">
+        <!-- LIST COMPANY -->
+        <form th:action="@{/home/customer/search}" method="post">
+            <select name="company" id="company">
+                <option value="">Brands</option>
+                <option th:each="company : ${listCompany}" th:value="${company.getCompanyID()}"
+                        th:text="${company.getCompanyName()}">
+                </option>
+            </select>
+            <select name="city" id="city">
+                <option value="">City</option>
+                <option th:each="city : ${listCity}" th:value="${city}" th:text="${city}">
+                </option>
+            </select>
+            <input type="text" placeholder="Restaurant Name" name="restaurantName" id="restaurantName" value="">
+            <button type="submit"><i class="fa fa-search"></i></button>
         </form>
-
-        <div class="footer_menu">
-            <ul>
-                <li th:each="category : ${listCategoryRes}">
-                    <a th:href="@{/home/customer/search/{category}(category = ${category})}" th:text="${category}"></a>
-                </li>
-            </ul>
-        </div>
-        <div class="location_main">Email : <a href="#">support@codefood.vn</a></div>
     </div>
-</div>
-<!-- footer section end -->
+    <div class="others">
+        <!--PROFILE-->
+        <a th:href="@{/customer/profile}"><i class="fa fa-user"></i> </a>
+        <!--LOGIN BUTTON-->
+        <!--        <a th:href="@{/login/logout}"><i class="fa fa-sign-in"></i> </a>-->
+        <!--LOGOUT BUTTON-->
+        <a th:href="@{/login/logout}"><i class="fa fa-sign-out"></i> </a>
+    </div>
+</header>
+<!-- start body -->
+<section class="category">
+    <div class="container">
+        <div class="row">
+            <div class="category-left">
+
+                    <h1>Discovery</h1>
+                    <div class="subcontainer">
+                        <ul>
+                            <li><i class="fa fa-spoon">Restaurant</i>
+                                <ul th:each="category : ${listCategoryRes}">
+                                    <li><a href="" th:href="@{/home/customer/search/{category}(category = ${category})}"
+                                           th:text="${category}"></a></li>
+                                </ul>
+                            </li>
+                            <li><i class="fa fa-location-arrow">City</i>
+                                <ul th:each="city : ${listCity}">
+                                    <li><a href="" th:text="${city}"></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+            </div>
 
 
+            <div class="category-right row">
 
 
+                <h1 style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">Hot Restaurants:</h1>
+
+                <div class="content row">
+                    <a th:href="@{/restaurant/customer/{id}(id=${restaurant.getResID()})}" class="content-item"
+                       th:each="restaurant : ${listHotRestaurant}">
+                        <img th:src="@{${restaurant.getPicture()}}" alt="">
+                        <h1 th:text="${restaurant.getResName()}"></h1>
+                        <i class="fa fa-location-arrow"></i>
+                        <span th:text="${restaurant.getCity()}"></span>
+                        <span th:text="${restaurant.getDistrict()}"></span>
+                        <p>Rating: <span th:text="${restaurant.getRatingPoint()}"></span></p>
+                    </a>
+                </div>
+
+                <h1 style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">Best seller:</h1>
+                <div class="content row">
+                    <div class="content-item" th:each="food : ${listHotFood}">
+                        <img th:src="@{${food.getPicture()}}" alt="">
+                        <h1 th:text="${food.getFoodName()}"></h1>
+                        <i class="fa fa-money"></i><span th:text="${food.getPrice()}"></span>
+                        <span th:text="${food.getRestaurant().getResName()}"></span>
+                        <p>Description: <span th:text="${food.getDescriptionFood()}"></span></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
 
 
-
-
-<!-- Javascript files-->
-<script src="js/jquery.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.bundle.min.js"></script>
-<script src="js/jquery-3.0.0.min.js"></script>
-<script src="js/plugin.js"></script>
-<!-- sidebar -->
-<script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-<script src="js/custom.js"></script>
+<!-- footer -->
+<footer>
+    <li><a th:href="@{/home/customer}"><img src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E" alt=""></a></li>
+    <li><a href="">Contact</a></li>
+    <li><a href="">We're hiring</a></li>
+    <li><a href="">About us</a></li>
+</footer>
 </body>
+
 </html>

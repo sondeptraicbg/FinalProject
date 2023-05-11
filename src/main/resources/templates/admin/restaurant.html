@@ -1,92 +1,201 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>MANAGE RESTAURANT</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+
+    <link rel="stylesheet" th:href="@{/css/chart.css}">
+
+    <link rel="stylesheet" href="admin.css">
+    <script src="https://kit.fontawesome.com/2b070e02a1.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
 
-
-    <button id="back-button">Go back</button>
-
-    <script>
-        document.getElementById("back-button").addEventListener("click", function() {
-            window.history.back();
-        });
-    </script>
-
-    <div style="border: 2px solid; margin-bottom: 20px" >
-        <h1 th:object="${company}">
-            <span>Manager(this account) </span>
-            <span th:text="${company.getCompanyName()}"></span>
-        </h1>
+<header>
+    <div class="logo">
+        <a th:href="@{/home/admin}"><img
+                src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E" alt=""></a>
     </div>
+    <div class="menu">
+        <!-- LIST COMPANY -->
 
-    <div style="border: 2px solid; margin-bottom: 20px" th:object="${restaurant}">
-        <h1>Restaurant</h1>
-        <h3 th:text="${restaurant.getResName()+ ' in ' + restaurant.getCity()}"></h3>
+        <div th:object="${restaurant}">
+            <h1 style="font-size: 22px">Restaurant <span style="font-size: 22px"
+                                                         th:text="${restaurant.getResName()+ ' in ' + restaurant.getCity()}"></span>
+            </h1>
+        </div>
     </div>
+    <div class="others">
+        <!--PROFILE-->
+        <!--LOGIN BUTTON-->
+        <!--        <a th:href="@{/login/logout}"><i class="fa fa-sign-in"></i> </a>-->
+        <!--LOGOUT BUTTON-->
+        <a th:href="@{/login/logout}"><i class="fa fa-sign-out"></i> </a>
+        <!--ABOUT US-->
+        <!--        <a th:href=""><i class="fa fa-question"></i> </a>-->
+    </div>
+</header>
 
-    <!-- LIST EMPLOYEE -->
-    <h1>List Employee</h1>
-    <div>
-        <a th:href="@{/admin/addstaff/{id}(id=${restaurant.getResID()})}">Add employee</a>
-    </div>
-    <div style="border: 2px solid; margin-bottom: 20px">
-        <div th:each="employee : ${listEmployee}">
-            <a th:href="@{/home/manager/em/{id}(id=${employee.getEmpId()})}">
-                <div>
-                    <h3 th:text="${employee.getEmpName()}"></h3>
-                    <h3 th:text="${employee.getEmail()}"></h3>
+
+<!-- start body -->
+
+<!-- LIST EMPLOYEE -->
+<!-- start body -->
+<section class="category">
+    <div class="container">
+        <div class="row">
+
+            <div class="category-right row">
+
+                <!-- LIST EMPLOYEE -->
+
+
+
+
+                <div class="content row">
+                    <h1
+                            style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">
+                        List Employee: <a style="    margin-left: 10px;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #f26522;
+    position: relative;
+    top: -5px;" th:href="@{/admin/addstaff/{id}(id=${restaurant.getResID()})}">Add employee</a></h1>
+                    <a th:each="employee : ${listEmployee}" class="content-item"
+                       th:href="@{/home/admin/em/{id}(id=${employee.getEmpId()})}">
+                        <!--                        <img src="images/icons/page-logo.png" alt="">-->
+                        <h1 th:text="${employee.getEmpName()}">THT</h1>
+                        <span th:text="${employee.getEmail()}">tht@emial</span>
+                    </a>
                 </div>
-            </a>
-        </div>
-    </div>
 
-    <!-- LIST ORDER -->
-    <div style="border: 2px solid; margin-bottom: 20px">
-        <h1>List order</h1>
-        <div th:each="order : ${listOrder}">
-            <a th:href="@{/order/{id}(id=${order.getOrderId()})}">
-                <div>
-                    <h3 th:text="${order.getCustomer().getCusName()}"></h3>
-                    <h3 th:text="${order.getOrderId()}"></h3>
-                    <h3 th:text="${order.getOrderStatus()}"></h3>
-                    <h3 th:text="${order.getTimeOrder()}"></h3>
+
+                <!-- LIST ORDER -->
+
+                <div class="content row">
+                    <h1
+                            style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">
+                        List order:</h1>
+                    <a th:each="order : ${listOrder}" class="content-item"
+                       th:href="@{/order/{id}(id=${order.getOrderId()})}">
+
+                        <h2 th:if="${order.customer != null}" th:text="${order.getCustomer().getCusName()}">THT</h2>
+
+                        <span class="title">ID: </span><span th:text="${order.getOrderId()}">1</span>
+                        <span class="title">Status: </span><span th:text="${order.getOrderStatus()}">done</span>
+                        <br>
+                        <span class="title">Order Time: </span><span th:text="${order.getTimeOrder()}">17h</span>
+                    </a>
+
+
                 </div>
-            </a>
-        </div>
-    </div>
 
-    <!-- LIST RATE -->
-    <div style="border: 2px solid; margin-bottom: 20px">
-        <h1>List rate (comment)</h1>
-        <div th:each="rate : ${listRate}">
-            <h3 th:text="${rate.getRateId().getCustomer().getCusName()}"></h3>
-            <h3 th:text="${rate.getComment()}"></h3>
-            <h3 th:text="${rate.getRating()}"></h3>
-        </div>
-    </div>
 
-    <!-- LIST MENU -->
-    <div style="border: 2px solid; margin-bottom: 20px">
-        <h1>List food(menu)</h1>
-        <div th:each="menu : ${listMenu}">
-            <h3 th:text="${menu.getCategoryMenu().getCateName()}"></h3>
-            <h3 th:text="${menu.getDescriptionFood()}"></h3>
-            <h3 th:text="${menu.getPrice()}"></h3>
-        </div>
-    </div>
+                <!-- LIST RATE -->
 
-    <!-- REVENUE -->
-    <div style="border: 2px solid; margin-bottom: 20px">
-        <h1>Revenue</h1>
-        <div th:each="revenue : ${listRevenue}">
-            <h3 th:text="${revenue.getMonth()}"></h3>
-            <h3 th:text="${revenue.getYear()}"></h3>
-            <h3 th:text="${revenue.getRevenue()}"></h3>
+                <div class="content row">
+                    <h1
+                            style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">
+                        List rate (comment):</h1>
+                    <div class="content-item" th:each="rate : ${listRate}">
+                        <h1 th:text="${rate.getRateId().getCustomer().getCusName()}">THT</h1>
+                        <span class="title">Comment: </span><span th:text="${rate.getComment()}">Ngon</span>
+                        <br>
+                        <span class="title">Rate: </span><span th:text="${rate.getRating()}">5<i class="fa fa-star"></i></span>
+                    </div>
+                </div>
+
+
+                <!-- LIST MENU -->
+
+                <div class="content row">
+                    <h1
+                            style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">
+                        List food(menu):</h1>
+                    <div class="content-item" th:each="menu : ${listMenu}">
+                        <img th:src="@{${menu.getPicture()}}" alt="">
+                        <h1 th:text="${menu.getCategoryMenu().getCateName()}">BANH</h1>
+                        <span class="title">Description: </span><span th:text="${menu.getDescriptionFood()}"></span><br>
+                        <span th:text="${menu.getPrice()}"><i style="color: #f26522;" class="fa fa-dollar"></i></span>
+                    </div>
+                </div>
+
+
+
+                <!-- REVENUE -->
+
+                <div th:if="${listRevenue != null}" class="content row">
+                    <h1
+                            style="width: 100%;border-bottom: 3px solid #f26522;text-align: center;height: 35px; font-size: 30px">
+                        Revenue</h1>
+                    <div th:if="${listRevenue != null}" class="content-item" th:each="revenue : ${listRevenue}">
+                        <span class="title">Month: </span> <span th:text="${revenue.getMonth()}">2</span>
+                        <span class="title">Year: </span> <span th:text="${revenue.getYear()}">2222</span>
+                        <span class="title">Revenue: </span> <span th:text="${revenue.getRevenue()}">223131 <i
+                            class="fa fa-dollar"></i></span>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
+</section>
+
+<!-- chart js -->
+<div class="graphBox">
+    <div class="box">
+        <canvas id="myChart1"></canvas>
+    </div>
+</div>
+
+
+<!-- ------------------------------------------------------------------------------------------ -->
+
+
+<!-- footer -->
+<div class="footer">
+    <li><a href=""><img src="http://drive.google.com/uc?export=view&id=1PvcxMzPLy5G5z2BU0padYhW1aLCwKs5E"
+                        alt=""></a></li>
+    <li><a href="">Contact</a></li>
+    <li><a href="">We're hiring</a></li>
+    <li><a href="">About us</a></li>
+</div>
 
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+<script>
+    // var revenueYear = document.getElementById('myChart').getContext('2d');
+    var revenue = document.getElementById('myChart1').getContext('2d');
+
+    var revenueData = [[${listRevenueMonth}]];
+
+
+    var myChart = new Chart(revenue, {
+        type: 'bar',
+        data: {
+            labels: [[${listMonth}]],
+            datasets: [{
+                label: '',
+                data: revenueData,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+            }]
+        },
+        options: {
+            responsive: true,
+        }
+    });
+
+</script>
+
 </html>

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -42,16 +43,7 @@ public class HomeController {
 
     @GetMapping("/customer")
     public String dataHomePage(Model model) {
-        List<Restaurant> listHotRestaurant = customerHomeService.getListHotRestaurant();
-        model.addAttribute("listHotRestaurant", listHotRestaurant);
-        List<String> listCity = customerHomeService.getListCity();
-        model.addAttribute("listCity", listCity);
-        List<Company> listCompany = customerHomeService.getListCompany();
-        model.addAttribute("listCompany", listCompany);
-        List<String> listCategoryRes = customerHomeService.getCategoryRes();
-        model.addAttribute("listCategoryRes", listCategoryRes);
-        List<Menu> listHotFood = customerHomeService.getListHotFood();
-        model.addAttribute("listHotFood", listHotFood);
+        getInfoHome(model);
         return "customer/home";
     }
 
@@ -61,12 +53,26 @@ public class HomeController {
                                     @RequestParam(name = "restaurantName", required = false, defaultValue = "") String restaurantName,
                                     @RequestParam(name = "category", required = false, defaultValue = "") String category,
                                     Model model){
-        Company company = companyService.findCompanyByName(companyId);
+        Company company = companyService.findCompanyById(companyId);
 
         List<Restaurant> listRestaurant = restaurantService.searchRestaurant(company, city, restaurantName, category);
         model.addAttribute("listRestaurant", listRestaurant);
 //        return listRestaurant;
         return "customer/search";
+    }
+
+    @PostMapping("/default/search")
+    public String  searchDefaultRestaurant(@RequestParam(name = "company", required = false, defaultValue = "0") int companyId,
+                                    @RequestParam(name = "city", required = false, defaultValue = "") String city,
+                                    @RequestParam(name = "restaurantName", required = false, defaultValue = "") String restaurantName,
+                                    @RequestParam(name = "category", required = false, defaultValue = "") String category,
+                                    Model model){
+        Company company = companyService.findCompanyById(companyId);
+
+        List<Restaurant> listRestaurant = restaurantService.searchRestaurant(company, city, restaurantName, category);
+        model.addAttribute("listRestaurant", listRestaurant);
+//        return listRestaurant;
+        return "collection/search";
     }
 
     @GetMapping("/customer/search/{category}")
@@ -104,6 +110,13 @@ public class HomeController {
         return "manager/employeeDetail";
     }
 
+    @GetMapping("/admin/em/{id}")
+    public String DetailEmpManagerAdmin(@PathVariable int id, Model model){
+        Staff staff = staffService.getStaffById(id);
+        model.addAttribute("staff", staff);
+        return "admin/detailEmp";
+    }
+
     //edit staff
     @GetMapping("/staff/edit/{id}")
     public String updateStaff(@PathVariable("id") Integer id, Model model){
@@ -117,6 +130,36 @@ public class HomeController {
             return "redirect:/home/manager";
         }
     }
+
+    @PostMapping("admin/staff/edit")
+    public String updateStaffsByAddmin(@RequestParam(value = "resID") int resID,
+                               @RequestParam(value = "empID") int empID,
+                               @RequestParam(value = "empName") String empName,
+                               @RequestParam(value = "email") String email,
+                               @RequestParam(value = "password") String password,
+                               @RequestParam(value = "phoneNumber") String phoneNumber,
+                               @RequestParam(value = "picture") String picture,
+                               @RequestParam(value = "salary") double salary,
+                               @RequestParam(value = "status") String status,
+                               @RequestParam(value = "userName") String userName,
+                               @RequestParam(value = "roleID") int roleID){
+        Restaurant restaurant = restaurantService.getDetailRes(resID);
+        Staff staffCheck = staffService.getDetailStaff(empID);
+        Role role = roleService.getRoleByRestaurantAndRoleID(resID, roleID);
+        staffCheck.setEmpName(empName);
+        staffCheck.setUserName(userName);
+        staffCheck.setPassword(password);
+        staffCheck.setEmail(email);
+        staffCheck.setPhoneNumber(phoneNumber);
+        staffCheck.setPicture(picture);
+        staffCheck.setSalary(salary);
+        staffCheck.setStatus(status);
+        staffCheck.getRole().getRoleId().setRestaurant(restaurant);
+        staffCheck.setRole(role);
+        staffService.saveStaff(staffCheck);
+        return "redirect:/home/admin/restaurant/" + resID;
+    }
+
     @PostMapping("staff/edit")
     public String updateStaffs(@RequestParam(value = "resID") int resID,
                                @RequestParam(value = "empID") int empID,
@@ -231,8 +274,30 @@ public class HomeController {
         Company company = (Company) session.getAttribute("company");
         model.addAttribute("company", company);
 
-        List<Revenue> listRevenue = adminHomeService.getRevenueByMonth(restaurant.getResID());
-        model.addAttribute("listRevenue", listRevenue);
+//        List<Revenue> listRevenue = adminHomeService.getRevenueByMonth(restaurant.getResID());
+//        listRevenue.add(new Revenue(100, 2023, 2, 140, restaurant));
+//        model.addAttribute("listRevenue", listRevenue);
+
+        List<Revenue> revenues = adminHomeService.getRevenueByRestaurantID(restaurant.getResID());
+        List<Double> listRevenueMonth = new ArrayList<>();
+        List<Integer> listMonth = new ArrayList<>();
+        List<Integer> listYear = new ArrayList<>();
+        double revenueYear = 0.0;
+        for(Revenue revenue : revenues){
+            listRevenueMonth.add(revenue.getRevenue());
+            listMonth.add(revenue.getMonth());
+            listYear.add(revenue.getYear());
+            if(revenue.getYear() == 2022){
+                revenueYear += revenue.getRevenue();
+            }
+            else if (revenue.getYear() == 2023){
+                revenueYear += revenue.getRevenue();
+            }
+        }
+        model.addAttribute("revenueYear",revenueYear);
+        model.addAttribute("listYear",listYear);
+        model.addAttribute("listMonth",listMonth);
+        model.addAttribute("listRevenueMonth",listRevenueMonth);
         return "admin/restaurant";
     }
 
@@ -248,10 +313,38 @@ public class HomeController {
         model.addAttribute("listMenu", menuList);
     }
 
+    // Boss //=======================================================================================
+    @GetMapping("/boss")
+    public String BossHome(Model model, HttpSession session) {
+        List<Company> listCompany = companyService.getListCompany();
+        model.addAttribute("listCompany", listCompany);
+        return "boss/home";
+    }
+
     // Default home // ==========================================================================================
     @GetMapping("default")
-    public String HomeDefault(){
+    public String HomeDefault(Model model){
+        getInfoHome(model);
+
         return "collection/defaultHome";
+    }
+
+    @GetMapping("public")
+    public String getPublicLogin(Model model){
+        return "collection/login";
+    }
+
+    public void getInfoHome(Model model){
+        List<Restaurant> listHotRestaurant = customerHomeService.getListHotRestaurant();
+        model.addAttribute("listHotRestaurant", listHotRestaurant);
+        List<String> listCity = customerHomeService.getListCity();
+        model.addAttribute("listCity", listCity);
+        List<Company> listCompany = customerHomeService.getListCompany();
+        model.addAttribute("listCompany", listCompany);
+        List<String> listCategoryRes = customerHomeService.getCategoryRes();
+        model.addAttribute("listCategoryRes", listCategoryRes);
+        List<Menu> listHotFood = customerHomeService.getListHotFood();
+        model.addAttribute("listHotFood", listHotFood);
     }
 
 }
